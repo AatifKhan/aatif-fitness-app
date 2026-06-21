@@ -202,18 +202,6 @@ html,body{margin:0;padding:0}
           <!-- TRAINING -->
           <sc-if value="{{ detail.isTraining }}" hint-placeholder-val="{{ false }}">
           <div>
-            <!-- workout hero -->
-            <div style="background:#fff;border:1px solid #F0ECE6;border-radius:22px;overflow:hidden;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:14px;">
-              <div style="position:relative;background:#E9E5DE;">
-                <img src="{{ detail.image.src }}" alt="{{ detail.image.alt }}" loading="lazy" style="display:block;width:100%;height:176px;object-fit:cover;object-position:{{ detail.image.position }};">
-                <div style="position:absolute;left:14px;bottom:14px;padding:7px 10px;border-radius:999px;background:rgba(38,34,30,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#FAF8F5;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;">{{ detail.image.label }}</div>
-              </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px 12px;">
-                <div style="font-size:12.5px;color:#8F8A82;font-weight:600;line-height:1.35;">{{ detail.image.credit }}</div>
-                <a href="{{ detail.image.source }}" target="_blank" rel="noopener noreferrer" style="flex:none;color:#A29A90;font-size:11px;font-weight:700;text-decoration:none;">{{ detail.image.license }}</a>
-              </div>
-            </div>
-
             <!-- warm-up -->
             <div style="background:#fff;border:1px solid #F0ECE6;border-radius:22px;padding:20px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:14px;">
               <div style="display:flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:700;margin-bottom:6px;">
@@ -226,27 +214,104 @@ html,body{margin:0;padding:0}
             </div>
 
             <!-- exercises -->
-            <div style="background:#fff;border:1px solid #F0ECE6;border-radius:22px;padding:20px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:14px;">
-              <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:700;margin-bottom:4px;">The session · in order</div>
+            <div style="background:#fff;border:1px solid #F0ECE6;border-radius:22px;padding:18px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:14px;">
+              <div style="margin-bottom:10px;">
+                <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:3px;">Exercises</div>
+                <div style="font-size:13px;color:#8F8A82;font-weight:650;line-height:1.35;">{{ detail.exerciseSummary }}</div>
+              </div>
               <sc-for list="{{ detail.exercises }}" as="ex" hint-placeholder-count="6">
-                <div style="display:flex;gap:13px;padding:15px 0;border-top:1px solid #F2EEE8;align-items:flex-start;">
-                  <div style="flex:none;width:27px;height:27px;border-radius:9px;background:{{ ex.tint }};color:{{ ex.tintInk }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:14px;margin-top:1px;">{{ ex.n }}</div>
-                  <div style="flex:1;min-width:0;">
-                    <div style="font-size:16.5px;color:#26221E;font-weight:600;line-height:1.3;">{{ ex.name }}</div>
-                    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
-                      <sc-for list="{{ ex.targetChips }}" as="muscle" hint-placeholder-count="3">
-                        <span style="display:inline-flex;align-items:center;max-width:100%;min-height:24px;border-radius:999px;border:1px solid {{ muscle.border }};background:{{ muscle.bg }};color:{{ muscle.color }};font-size:11.5px;font-weight:700;line-height:1;padding:6px 9px;white-space:normal;">{{ muscle.name }}</span>
-                      </sc-for>
+                <div style="border-top:1px solid #F2EEE8;padding:10px 0;">
+                  <button onClick="{{ ex.toggle }}" aria-expanded="{{ ex.expanded }}" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font-family:inherit;cursor:pointer;display:flex;gap:12px;align-items:center;" style-active="transform:scale(.995)">
+                    <sc-if value="{{ ex.hasThumbnail }}" hint-placeholder-val="{{ true }}">
+                      <div style="position:relative;flex:none;width:58px;height:74px;border-radius:14px;border:1px solid #F0ECE6;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <img src="{{ ex.thumbnail }}" alt="" aria-hidden="true" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;background:#fff;">
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ ex.showNumberTile }}" hint-placeholder-val="{{ false }}">
+                      <div style="flex:none;width:34px;height:34px;border-radius:11px;background:{{ ex.tint }};color:{{ ex.tintInk }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:800;font-size:14px;">{{ ex.n }}</div>
+                    </sc-if>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;align-items:flex-start;gap:10px;">
+                        <div style="flex:1;min-width:0;display:flex;gap:6px;align-items:baseline;font-size:16px;color:#26221E;font-weight:750;line-height:1.22;">
+                          <span style="flex:none;color:{{ ex.tintInk }};font-weight:900;font-variant-numeric:tabular-nums;">{{ ex.n }}.</span>
+                          <span style="min-width:0;">{{ ex.name }}</span>
+                        </div>
+                        <div style="flex:none;font-size:15px;color:#26221E;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:1px;">{{ ex.scheme }}</div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:7px;min-width:0;font-size:12.5px;color:#8F8A82;font-weight:700;line-height:1.35;">
+                        <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:{{ ex.tintInk }};">{{ ex.primaryText }}</span>
+                        <span style="flex:none;color:#D4CEC6;">·</span>
+                        <span style="flex:none;color:#A8A096;">{{ ex.rest }} rest</span>
+                        <sc-if value="{{ ex.hasNoteDisplay }}" hint-placeholder-val="{{ false }}">
+                          <span style="flex:none;color:#D4CEC6;">·</span>
+                          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#A86F5F;">{{ ex.noteDisplay }}</span>
+                        </sc-if>
+                      </div>
                     </div>
-                    <div style="display:flex;align-items:center;gap:12px;margin-top:5px;font-size:12.5px;color:#A8A096;font-weight:600;">
-                      <span style="display:flex;align-items:center;gap:5px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>{{ ex.rest }} rest</span>
-                      <sc-if value="{{ ex.note }}" hint-placeholder-val="">
-                        <span style="color:{{ ex.tintInk }};">{{ ex.note }}</span>
+                    <div style="flex:none;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:11px;background:{{ ex.expandBg }};color:{{ ex.expandColor }};">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;transform:rotate({{ ex.chevronRotation }}deg);transition:transform .18s ease;"><path d="m9 6 6 6-6 6"/></svg>
+                    </div>
+                  </button>
+
+                  <sc-if value="{{ ex.expanded }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:14px 0 2px 0;">
+                    <sc-if value="{{ ex.hasMedia }}" hint-placeholder-val="{{ false }}">
+                    <div style="border:1px solid #F0ECE6;border-radius:18px;overflow:hidden;background:#FAF8F5;margin-bottom:14px;">
+                      <sc-if value="{{ ex.mediaIsVideo }}" hint-placeholder-val="{{ false }}">
+                        <video src="{{ ex.media.src }}" controls muted playsinline style="display:block;width:auto;max-width:100%;height:auto;max-height:340px;object-fit:contain;background:#fff;margin:0 auto;"></video>
+                      </sc-if>
+                      <sc-if value="{{ ex.mediaIsImage }}" hint-placeholder-val="{{ true }}">
+                        <img src="{{ ex.media.src }}" alt="{{ ex.media.alt }}" loading="lazy" style="display:block;width:auto;max-width:100%;height:auto;max-height:340px;object-fit:contain;object-position:{{ ex.media.position }};background:#fff;margin:0 auto;">
+                      </sc-if>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;">
+                        <div style="font-size:11.5px;color:#8F8A82;font-weight:600;line-height:1.35;">{{ ex.media.credit }}</div>
+                        <a href="{{ ex.media.source }}" target="_blank" rel="noopener noreferrer" style="flex:none;color:#A29A90;font-size:11px;font-weight:800;text-decoration:none;">{{ ex.media.license }}</a>
+                      </div>
+                    </div>
+                    </sc-if>
+
+                    <div style="display:grid;gap:12px;">
+                      <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:11px 12px;">
+                        <div style="display:grid;gap:7px;">
+                          <div style="display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#4A453F;line-height:1.35;">
+                            <span style="flex:none;min-width:58px;color:{{ ex.tintInk }};font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;padding-top:2px;">Primary</span>
+                            <span style="font-weight:750;">{{ ex.primaryText }}</span>
+                          </div>
+                          <sc-if value="{{ ex.hasSecondaryTargets }}" hint-placeholder-val="{{ true }}">
+                            <div style="display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#5A554E;line-height:1.35;">
+                              <span style="flex:none;min-width:58px;color:#A8A096;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;padding-top:2px;">Assists</span>
+                              <span style="font-weight:650;">{{ ex.secondaryText }}</span>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">How to perform</div>
+                        <sc-for list="{{ ex.steps }}" as="step" hint-placeholder-count="3">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ step }}</span></div>
+                        </sc-for>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Cues</div>
+                        <sc-for list="{{ ex.cues }}" as="cue" hint-placeholder-count="2">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ cue }}</span></div>
+                        </sc-for>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Avoid</div>
+                        <sc-for list="{{ ex.mistakes }}" as="mistake" hint-placeholder-count="2">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:#B0654E;font-weight:800;">·</span><span>{{ mistake }}</span></div>
+                        </sc-for>
+                      </div>
+                      <sc-if value="{{ ex.hasSubstitutions }}" hint-placeholder-val="{{ true }}">
+                      <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:11px 12px;">
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:5px;">Swap if needed</div>
+                        <div style="font-size:14px;color:#4A453F;font-weight:600;line-height:1.4;">{{ ex.substitutionText }}</div>
+                      </div>
                       </sc-if>
                     </div>
-                    <div style="font-size:13.5px;color:#8F8A82;font-weight:500;line-height:1.42;margin-top:7px;">{{ ex.cue }}</div>
                   </div>
-                  <div style="font-size:15px;color:#26221E;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:2px;">{{ ex.scheme }}</div>
+                  </sc-if>
                 </div>
               </sc-for>
             </div>
@@ -403,7 +468,7 @@ html,body{margin:0;padding:0}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:932}}">
 class Component extends DCLogic {
-  state = { tab: 'today', warmOpen: false, progOpen: false, selectedDay: null };
+  state = { tab: 'today', warmOpen: false, progOpen: false, selectedDay: null, expandedExerciseKey: null };
 
   // ---- palette by session kind ----
   tone(kind) {
@@ -423,9 +488,9 @@ class Component extends DCLogic {
       '2 ramp-up sets on the first big lift before working weight',
     ];
     const progressionItems = [
-      'Pick a weight where the last rep of each set is genuinely hard but form holds.',
-      'Hit the TOP of the rep range on ALL sets → next time add 2.5 kg (upper) or 5 kg (lower) and restart at the bottom.',
-      'Log your lifts — beating last week\u2019s numbers over time IS the program.',
+      'Weight aisa le ki last rep tough ho, lekin technique solid rahe.',
+      'Sab sets me top reps nikal gaye? Mast. Agli baar thoda aur weight daal: Upper +2.5 kg, Lower +5 kg. Phir bottom reps se wapas start.',
+      'Record rakh. Har hafte thoda improve karna hi asli progress hai.',
     ];
     const sessions = {
       'Upper A': [
@@ -507,6 +572,128 @@ class Component extends DCLogic {
         licenseUrl: 'https://creativecommons.org/licenses/by/2.0/',
       },
     };
+    const exerciseMedia = {
+      'Incline Barbell Bench': {
+        type: 'gif',
+        src: './assets/exercises/incline-barbell-bench-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-incline-bench/frame-1-full.png',
+        alt: 'Three-frame incline barbell bench press guide on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-incline-bench/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Barbell Row': {
+        type: 'gif',
+        src: './assets/exercises/barbell-row-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-barbell-row/frame-1-full.png',
+        alt: 'Three-frame barbell row guide with red-highlighted target muscles on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-barbell-row/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Seated DB Shoulder Press': {
+        type: 'gif',
+        src: './assets/exercises/seated-db-shoulder-press-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-seated-db-shoulder-press/frame-1-full.png',
+        alt: 'Three-frame seated dumbbell shoulder press guide on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-seated-db-shoulder-press/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Pull-ups / Lat Pulldown': {
+        type: 'gif',
+        src: './assets/exercises/pullups-lat-pulldown-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-pullups-lat-pulldown/frame-1-full.png',
+        alt: 'Three-frame lat pulldown guide with red-highlighted target muscles on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-pullups-lat-pulldown/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Triceps Pushdown': {
+        type: 'gif',
+        src: './assets/exercises/triceps-pushdown-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-triceps-pushdown/frame-1-full.png',
+        alt: 'Three-frame triceps cable pushdown guide with red-highlighted triceps on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-triceps-pushdown/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'EZ / Barbell Curl': {
+        type: 'gif',
+        src: './assets/exercises/ez-barbell-curl-clean.gif',
+        thumbnail: './assets/exercises/samples/clean-ez-barbell-curl/frame-1-full.png',
+        alt: 'Three-frame EZ-bar curl guide with red-highlighted biceps on a white background',
+        position: 'center center',
+        source: './assets/exercises/samples/clean-ez-barbell-curl/source-3-panel-clean.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Back Squat': {
+        type: 'image',
+        src: './assets/exercises/back-squat.jpg',
+        alt: 'A powerlifter completing a heavy back squat',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:Kirk-karwoski-squat.jpg',
+        author: 'FXShannon',
+        license: 'CC BY-SA 3.0',
+      },
+      'Lateral Raises': {
+        type: 'image',
+        src: './assets/exercises/lateral-raises.jpg',
+        alt: 'A lifter performing dumbbell lateral raises',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG',
+        author: 'GeorgeStepanek',
+        license: 'CC BY-SA 3.0',
+      },
+      'Conventional Deadlift': {
+        type: 'image',
+        src: './assets/exercises/conventional-deadlift.jpg',
+        alt: 'A lifter setting up for a conventional deadlift',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:Fit_young_man_doing_deadlift_exercise_in_gym.jpg',
+        author: 'Nenad Stojkovic',
+        license: 'CC BY 2.0',
+      },
+    };
+    const guide = (steps, cues, mistakes, substitutions, mediaName) => ({
+      steps,
+      cues,
+      mistakes,
+      substitutions: substitutions || [],
+      media: mediaName ? exerciseMedia[mediaName] : null,
+    });
+    const exerciseGuides = {
+      'Incline Barbell Bench': guide(['Set the bench to a low incline and plant feet firmly.', 'Unrack with shoulder blades pulled back and down.', 'Lower to upper chest, then press slightly back toward the rack.'], ['Keep wrists stacked over elbows.', 'Stop each set before shoulder position breaks.'], ['Flaring elbows straight out.', 'Bouncing the bar off the chest.'], ['Incline dumbbell press', 'Machine incline press'], 'Incline Barbell Bench'),
+      'Barbell Row': guide(['Hinge until the torso is firm and braced.', 'Pull the bar toward the lower ribs.', 'Lower until arms are long without losing back position.'], ['Think elbows to hips.', 'Keep the torso angle fixed.'], ['Standing up each rep.', 'Yanking with the lower back.'], ['Chest-supported row', 'Seated cable row'], 'Barbell Row'),
+      'Seated DB Shoulder Press': guide(['Sit tall with dumbbells at shoulder height.', 'Press up and slightly in until arms are long.', 'Lower with elbows a little forward of the torso.'], ['Ribs down, glutes tight.', 'Finish with biceps near ears.'], ['Overarching the lower back.', 'Letting dumbbells drift too far behind you.'], ['Machine shoulder press', 'Landmine press'], 'Seated DB Shoulder Press'),
+      'Pull-ups / Lat Pulldown': guide(['Start from a long-arm stretch.', 'Drive elbows down toward the ribs.', 'Control the return without shrugging.'], ['Chest proud.', 'Pull with elbows, not hands.'], ['Half reps.', 'Turning it into a biceps curl.'], ['Assisted pull-up', 'Neutral-grip pulldown'], 'Pull-ups / Lat Pulldown'),
+      'Triceps Pushdown': guide(['Set elbows close to the ribs.', 'Push the handle down until elbows lock softly.', 'Return until forearms rise without shoulders moving.'], ['Pin elbows in place.', 'Squeeze hard at the bottom.'], ['Leaning bodyweight into the handle.', 'Letting elbows drift forward.'], ['Cable overhead extension', 'Machine dip'], 'Triceps Pushdown'),
+      'EZ / Barbell Curl': guide(['Grip just outside shoulder width.', 'Curl without letting elbows move forward.', 'Lower slowly to a full arm stretch.'], ['Shoulders quiet.', 'Control the negative.'], ['Swinging the torso.', 'Cutting the bottom short.'], ['DB curl', 'Cable curl'], 'EZ / Barbell Curl'),
+      'Back Squat': guide(['Set bar firmly across upper back and brace.', 'Sit down between the hips with knees tracking toes.', 'Drive up through mid-foot and stay tight at the top.'], ['Brace before every rep.', 'Chest and hips rise together.'], ['Knees caving inward.', 'Relaxing at the bottom.'], ['Front squat', 'Leg press'], 'Back Squat'),
+      'Romanian Deadlift': guide(['Hold the bar close and unlock knees slightly.', 'Push hips back until hamstrings are loaded.', 'Stand tall by squeezing glutes, not leaning back.'], ['Bar stays close.', 'Hips move back, not down.'], ['Rounding the back.', 'Squatting the movement.'], ['DB Romanian deadlift', 'Hip thrust']),
+      'Leg Press / Walking Lunges': guide(['Set feet so knees can bend comfortably.', 'Lower under control through a pain-free range.', 'Press through the whole foot without locking knees hard.'], ['Smooth reps.', 'Knees follow toes.'], ['Letting hips tuck under deeply.', 'Rushing the bottom.'], ['Hack squat', 'Split squat']),
+      'Leg Curl': guide(['Line knees with the machine pivot.', 'Curl heels toward glutes.', 'Pause, then resist the pad back down.'], ['Squeeze at the top.', 'Keep hips pinned.'], ['Lifting hips off the pad.', 'Dropping the weight.'], ['Seated leg curl', 'Stability-ball curl']),
+      'Standing Calf Raise': guide(['Start with heels lowered into a stretch.', 'Rise tall onto the balls of the feet.', 'Pause briefly before lowering again.'], ['Big toe pressure.', 'Full stretch every rep.'], ['Bouncing through reps.', 'Rolling ankles outward.'], ['Seated calf raise', 'Leg-press calf raise']),
+      'Cable Crunch + Captain’s Chair': guide(['Crunch ribs toward pelvis on the cable.', 'Keep hips stable on knee raises.', 'Move slowly enough to feel abs, not momentum.'], ['Exhale as you crunch.', 'Control the pelvis.'], ['Pulling with arms.', 'Swinging the legs.'], ['Reverse crunch', 'Dead bug']),
+      'Flat DB Bench': guide(['Lie with dumbbells above chest and feet planted.', 'Lower slightly outside the chest.', 'Press up while keeping shoulders packed.'], ['Wrists stacked.', 'Elbows at a comfortable angle.'], ['Letting shoulders roll forward.', 'Clanging dumbbells at the top.'], ['Machine chest press', 'Push-ups']),
+      'One-Arm DB Row / Cable Row': guide(['Brace with a stable torso.', 'Reach long at the bottom.', 'Pull elbow toward the hip and squeeze the back.'], ['Long stretch, strong pull.', 'No torso twist.'], ['Shrugging the shoulder.', 'Pulling straight up to the armpit.'], ['Chest-supported DB row', 'Seated cable row']),
+      'Incline DB Press': guide(['Use a moderate incline and start DBs by upper chest.', 'Press up and slightly together.', 'Lower until chest and shoulders stay comfortable.'], ['Keep wrists neutral.', 'Control depth.'], ['Too steep an incline.', 'Overstretching the shoulder.'], ['Incline machine press', 'Low-incline push-up']),
+      'Lateral Raises': guide(['Hold DBs by sides with soft elbows.', 'Lift out and slightly forward to shoulder height.', 'Lower slowly until delts stay loaded.'], ['Lead with elbows.', 'Neck relaxed.'], ['Shrugging the traps.', 'Swinging from the hips.'], ['Cable lateral raise', 'Machine lateral raise'], 'Lateral Raises'),
+      'Dips / Close-Grip Bench': guide(['Choose the version that feels best on shoulders.', 'Lower under control with elbows tracking naturally.', 'Press up by driving through triceps.'], ['Pain-free depth.', 'Control the bottom.'], ['Dropping too deep.', 'Letting shoulders roll forward.'], ['Triceps pushdown', 'Machine dip']),
+      'Hammer Curl': guide(['Hold dumbbells with palms facing in.', 'Curl without moving upper arms.', 'Lower until elbows are straight but controlled.'], ['Thumbs up.', 'Elbows still.'], ['Swinging the weights.', 'Shortening the lower half.'], ['Rope cable curl', 'Cross-body hammer curl']),
+      'Conventional Deadlift': guide(['Set feet under hips and bar over mid-foot.', 'Brace, pull slack out of the bar, and push the floor away.', 'Lock out tall with glutes, then hinge the bar back down.'], ['Lats tight.', 'Bar stays close.'], ['Jerking the bar from the floor.', 'Leaning back at lockout.'], ['Trap-bar deadlift', 'Romanian deadlift'], 'Conventional Deadlift'),
+      'Front Squat / Leg Press': guide(['For front squat, keep elbows high and torso upright.', 'Descend with knees tracking toes.', 'Drive up without losing brace.'], ['Stay tall.', 'Mid-foot pressure.'], ['Collapsing elbows.', 'Letting heels lift.'], ['Goblet squat', 'Hack squat']),
+      'Bulgarian Split Squat': guide(['Set rear foot on bench and front foot far enough forward.', 'Lower until front leg does the work.', 'Drive through the whole front foot.'], ['Slow descent.', 'Front knee tracks toes.'], ['Pushing off the back leg.', 'Bouncing at the bottom.'], ['Walking lunge', 'Step-up']),
+      'Leg Extension': guide(['Set pad above the ankle and back against the seat.', 'Extend knees until quads squeeze.', 'Lower slowly without letting the stack slam.'], ['Hard top squeeze.', 'Controlled lowering.'], ['Kicking with momentum.', 'Lifting hips off the seat.'], ['Sissy squat', 'Terminal knee extension']),
+      'Seated Calf Raise': guide(['Set knees under the pad and heels low.', 'Raise heels as high as possible.', 'Pause, then lower into a deep stretch.'], ['Deliberate reps.', 'Full ankle range.'], ['Tiny partial reps.', 'Bouncing out of the stretch.'], ['Standing calf raise', 'Single-leg calf raise']),
+      'Air Bike + Cable Crunch': guide(['Use the air bike with steady trunk rotation.', 'Move to cable crunches with ribs curling toward pelvis.', 'Keep both movements controlled and crisp.'], ['Abs initiate the motion.', 'Breathe through each rep.'], ['Pulling the neck.', 'Rushing reps just to finish.'], ['Plank', 'Reverse crunch']),
+    };
     const cardioSteps = [
       { name: 'Easy warm-up', detail: '3–5 min · gradually lift the pace' },
       { name: 'Zone-2 steady state', detail: '30–40 min · conversational, ~60–70% max HR' },
@@ -549,7 +736,7 @@ class Component extends DCLogic {
       { day: 'Sat', idx: 6, text: dinnersByIdx[6] },
       { day: 'Sun', idx: 0, text: dinnersByIdx[0] },
     ];
-    return { warmupItems, progressionItems, sessions, workoutImages, cardioSteps, map, week, dinnersByIdx, dinnerList };
+    return { warmupItems, progressionItems, sessions, workoutImages, exerciseGuides, cardioSteps, map, week, dinnersByIdx, dinnerList };
   }
 
   renderVals() {
@@ -574,11 +761,11 @@ class Component extends DCLogic {
         bg: isToday ? '#fff' : '#FBFAF7',
         border: isToday ? '#F6DACE' : '#F0ECE6',
         isToday,
-        open: () => this.setState({ selectedDay: w.idx }),
+        open: () => this.setState({ selectedDay: w.idx, expandedExerciseKey: null }),
       };
     });
 
-    const tintEx = (list, tone) => (list || []).map((ex, i) => {
+    const tintEx = (list, tone, sessionName) => (list || []).map((ex, i) => {
       const primary = (ex.primaryMuscles || []).map(name => ({
         name,
         bg: tone.soft,
@@ -591,7 +778,49 @@ class Component extends DCLogic {
         color: '#8F8A82',
         border: '#F0ECE6',
       }));
-      return { ...ex, n: i + 1, tint: tone.soft, tintInk: tone.color, targetChips: primary.concat(secondary) };
+      const guide = D.exerciseGuides[ex.name] || {};
+      const key = sessionName + '-' + i;
+      const expanded = this.state.expandedExerciseKey === key;
+      const media = guide.media ? {
+        ...guide.media,
+        credit: 'Image: ' + guide.media.author,
+      } : null;
+      const primaryText = (ex.primaryMuscles || []).join(' · ');
+      const secondaryText = (ex.secondaryMuscles || []).join(' · ');
+      const noteDisplay = ex.note && ex.note.indexOf('Superset with ') === 0
+        ? 'Pair: ' + ex.note.replace('Superset with ', '')
+        : '';
+      return {
+        ...ex,
+        n: i + 1,
+        tint: tone.soft,
+        tintInk: tone.color,
+        targetChips: primary.concat(secondary),
+        primaryText,
+        secondaryText,
+        hasSecondaryTargets: !!secondaryText,
+        steps: guide.steps || [ex.cue],
+        cues: guide.cues || [ex.cue],
+        mistakes: guide.mistakes || ['Do not chase load if form changes.'],
+        substitutions: guide.substitutions || [],
+        hasSubstitutions: !!(guide.substitutions && guide.substitutions.length),
+        substitutionText: (guide.substitutions || []).join(' · '),
+        media,
+        hasMedia: !!media,
+        thumbnail: media && media.thumbnail ? media.thumbnail : '',
+        thumbnailAlt: media ? media.alt : '',
+        hasThumbnail: !!(media && media.thumbnail),
+        showNumberTile: !(media && media.thumbnail),
+        mediaIsVideo: !!media && media.type === 'video',
+        mediaIsImage: !!media && media.type !== 'video',
+        expanded,
+        expandBg: expanded ? tone.soft : '#FAF8F5',
+        expandColor: expanded ? tone.color : '#B8B0A6',
+        chevronRotation: expanded ? -90 : 90,
+        noteDisplay,
+        hasNoteDisplay: !!noteDisplay,
+        toggle: () => this.setState({ expandedExerciseKey: expanded ? null : key }),
+      };
     });
     const sel = this.state.selectedDay;
     const detailOpen = (sel !== null && sel !== undefined);
@@ -605,7 +834,8 @@ class Component extends DCLogic {
         color: dtone.color, soft: dtone.soft,
         tag: dd.kind === 'Cardio' ? 'Cardio' : dd.kind === 'Rest' ? 'Rest' : dd.kind,
         isTraining: isTr, isCardio: dd.kind === 'Cardio', isRest: dd.kind === 'Rest',
-        exercises: isTr ? tintEx(D.sessions[dd.session], dtone) : [],
+        exercises: isTr ? tintEx(D.sessions[dd.session], dtone, dd.session) : [],
+        exerciseSummary: isTr ? D.sessions[dd.session].length + ' moves · primary target shown' : '',
         image: isTr ? D.workoutImages[dd.session] : null,
         message: dd.message || '',
       };
@@ -659,7 +889,7 @@ class Component extends DCLogic {
       sessionColor: t.color, sessionSoft: t.soft,
       isTraining, isCalm: !isTraining,
       restMessage: today.message || '',
-      exercises: isTraining ? tintEx(D.sessions[today.session], t) : [],
+      exercises: isTraining ? tintEx(D.sessions[today.session], t, today.session) : [],
       warmupItems: D.warmupItems, progressionItems: D.progressionItems,
       warmOpen: this.state.warmOpen, progOpen: this.state.progOpen,
       warmRotate: this.state.warmOpen ? 'rotate(180deg)' : 'rotate(0deg)',
@@ -674,7 +904,7 @@ class Component extends DCLogic {
       weekDetailOpen: detailOpen,
       detail, detailKey: sel,
       cardioSteps: D.cardioSteps,
-      closeDetail: () => this.setState({ selectedDay: null }),
+      closeDetail: () => this.setState({ selectedDay: null, expandedExerciseKey: null }),
       breakfasts, lunches, dinners, rules, recovery,
     };
   }
