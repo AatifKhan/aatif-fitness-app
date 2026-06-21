@@ -1,0 +1,17 @@
+{
+  "name": "Aatif Fitness",
+  "short_name": "Fitness",
+  "description": "A mobile reference app for weekly training, meals, and recovery rules.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#FAF8F5",
+  "icons": [
+    {
+      "src": "./icon.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ]
+}
