@@ -72,17 +72,98 @@ html,body{margin:0;padding:0}
 
             <!-- Exercises -->
             <div style="margin-top:18px;">
+              <div style="margin-bottom:10px;">
+                <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:3px;">Exercises</div>
+                <div style="font-size:13px;color:#8F8A82;font-weight:650;line-height:1.35;">{{ todayExerciseSummary }}</div>
+              </div>
               <sc-for list="{{ exercises }}" as="ex" hint-placeholder-count="6">
-                <div style="display:flex;gap:13px;padding:14px 2px;border-top:1px solid #F2EEE8;align-items:flex-start;">
-                  <div style="flex:none;width:25px;height:25px;border-radius:8px;background:{{ ex.tint }};color:{{ ex.tintInk }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:700;font-size:13px;margin-top:1px;">{{ ex.n }}</div>
-                  <div style="flex:1;min-width:0;">
-                    <div style="font-size:16px;color:#26221E;font-weight:500;line-height:1.3;">{{ ex.name }}</div>
-                    <div style="display:flex;align-items:center;gap:5px;margin-top:4px;font-size:12.5px;color:#A8A096;font-weight:600;">
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                      {{ ex.rest }} rest
+                <div style="border-top:1px solid #F2EEE8;padding:10px 0;">
+                  <button onClick="{{ ex.toggle }}" aria-expanded="{{ ex.expanded }}" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font-family:inherit;cursor:pointer;display:flex;gap:12px;align-items:center;" style-active="transform:scale(.995)">
+                    <sc-if value="{{ ex.hasThumbnail }}" hint-placeholder-val="{{ true }}">
+                      <div style="position:relative;flex:none;width:58px;height:74px;border-radius:14px;border:1px solid #F0ECE6;background:#fff;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+                        <img src="{{ ex.thumbnail }}" alt="" aria-hidden="true" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;background:#fff;">
+                      </div>
+                    </sc-if>
+                    <div style="flex:1;min-width:0;">
+                      <div style="min-width:0;font-size:16px;color:#26221E;font-weight:750;line-height:1.28;">
+                        <span style="color:#26221E;font-weight:900;font-variant-numeric:tabular-nums;">{{ ex.n }}.</span>
+                        <span> {{ ex.name }}</span>
+                        <span style="display:inline-flex;align-items:center;justify-content:center;color:#B8B0A6;vertical-align:middle;transform:rotate({{ ex.chevronRotation }}deg);transition:transform .18s ease;margin-left:4px;">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                        <span style="display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;background:#FAF8F5;border:1px solid #F0ECE6;color:#7C746B;font-size:12.5px;font-weight:800;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums;vertical-align:middle;margin-left:7px;">{{ ex.scheme }}</span>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:7px;min-width:0;font-size:12.5px;color:#8F8A82;font-weight:700;line-height:1.35;">
+                        <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:{{ ex.tintInk }};">{{ ex.primaryText }}</span>
+                        <span style="flex:none;color:#D4CEC6;">·</span>
+                        <span style="flex:none;color:#A8A096;">{{ ex.rest }} rest</span>
+                        <sc-if value="{{ ex.hasNoteDisplay }}" hint-placeholder-val="{{ false }}">
+                          <span style="flex:none;color:#D4CEC6;">·</span>
+                          <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#A86F5F;">{{ ex.noteDisplay }}</span>
+                        </sc-if>
+                      </div>
+                    </div>
+                  </button>
+
+                  <sc-if value="{{ ex.expanded }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:14px 0 2px 0;">
+                    <sc-if value="{{ ex.hasMedia }}" hint-placeholder-val="{{ false }}">
+                    <div style="border:1px solid #F0ECE6;border-radius:18px;overflow:hidden;background:#FAF8F5;margin-bottom:14px;">
+                      <sc-if value="{{ ex.mediaIsVideo }}" hint-placeholder-val="{{ false }}">
+                        <video src="{{ ex.media.src }}" controls muted playsinline style="display:block;width:auto;max-width:100%;height:auto;max-height:340px;object-fit:contain;background:#fff;margin:0 auto;"></video>
+                      </sc-if>
+                      <sc-if value="{{ ex.mediaIsImage }}" hint-placeholder-val="{{ true }}">
+                        <img src="{{ ex.media.src }}" alt="{{ ex.media.alt }}" loading="lazy" style="display:block;width:auto;max-width:100%;height:auto;max-height:340px;object-fit:contain;object-position:{{ ex.media.position }};background:#fff;margin:0 auto;">
+                      </sc-if>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 11px;">
+                        <div style="font-size:11.5px;color:#8F8A82;font-weight:600;line-height:1.35;">{{ ex.media.credit }}</div>
+                        <a href="{{ ex.media.source }}" target="_blank" rel="noopener noreferrer" style="flex:none;color:#A29A90;font-size:11px;font-weight:800;text-decoration:none;">{{ ex.media.license }}</a>
+                      </div>
+                    </div>
+                    </sc-if>
+
+                    <div style="display:grid;gap:12px;">
+                      <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:11px 12px;">
+                        <div style="display:grid;gap:7px;">
+                          <div style="display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#4A453F;line-height:1.35;">
+                            <span style="flex:none;min-width:58px;color:{{ ex.tintInk }};font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;padding-top:2px;">Primary</span>
+                            <span style="font-weight:750;">{{ ex.primaryText }}</span>
+                          </div>
+                          <sc-if value="{{ ex.hasSecondaryTargets }}" hint-placeholder-val="{{ true }}">
+                            <div style="display:flex;gap:8px;align-items:flex-start;font-size:14px;color:#5A554E;line-height:1.35;">
+                              <span style="flex:none;min-width:58px;color:#A8A096;font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:900;padding-top:2px;">Assists</span>
+                              <span style="font-weight:650;">{{ ex.secondaryText }}</span>
+                            </div>
+                          </sc-if>
+                        </div>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Chal Aise Kar</div>
+                        <sc-for list="{{ ex.steps }}" as="step" hint-placeholder-count="3">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ step }}</span></div>
+                        </sc-for>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Form Ka Funda</div>
+                        <sc-for list="{{ ex.cues }}" as="cue" hint-placeholder-count="2">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ cue }}</span></div>
+                        </sc-for>
+                      </div>
+                      <div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Ye Mat Kar</div>
+                        <sc-for list="{{ ex.mistakes }}" as="mistake" hint-placeholder-count="2">
+                          <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:#B0654E;font-weight:800;">·</span><span>{{ mistake }}</span></div>
+                        </sc-for>
+                      </div>
+                      <sc-if value="{{ ex.hasSubstitutions }}" hint-placeholder-val="{{ true }}">
+                      <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:11px 12px;">
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:5px;">Swap if needed</div>
+                        <div style="font-size:14px;color:#4A453F;font-weight:600;line-height:1.4;">{{ ex.substitutionText }}</div>
+                      </div>
+                      </sc-if>
                     </div>
                   </div>
-                  <div style="font-size:14px;color:#26221E;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:2px;">{{ ex.scheme }}</div>
+                  </sc-if>
                 </div>
               </sc-for>
             </div>
@@ -227,16 +308,14 @@ html,body{margin:0;padding:0}
                         <img src="{{ ex.thumbnail }}" alt="" aria-hidden="true" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;background:#fff;">
                       </div>
                     </sc-if>
-                    <sc-if value="{{ ex.showNumberTile }}" hint-placeholder-val="{{ false }}">
-                      <div style="flex:none;width:34px;height:34px;border-radius:11px;background:{{ ex.tint }};color:{{ ex.tintInk }};display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-weight:800;font-size:14px;">{{ ex.n }}</div>
-                    </sc-if>
                     <div style="flex:1;min-width:0;">
-                      <div style="display:flex;align-items:flex-start;gap:10px;">
-                        <div style="flex:1;min-width:0;display:flex;gap:6px;align-items:baseline;font-size:16px;color:#26221E;font-weight:750;line-height:1.22;">
-                          <span style="flex:none;color:{{ ex.tintInk }};font-weight:900;font-variant-numeric:tabular-nums;">{{ ex.n }}.</span>
-                          <span style="min-width:0;">{{ ex.name }}</span>
-                        </div>
-                        <div style="flex:none;font-size:15px;color:#26221E;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:1px;">{{ ex.scheme }}</div>
+                      <div style="min-width:0;font-size:16px;color:#26221E;font-weight:750;line-height:1.28;">
+                        <span style="color:#26221E;font-weight:900;font-variant-numeric:tabular-nums;">{{ ex.n }}.</span>
+                        <span> {{ ex.name }}</span>
+                        <span style="display:inline-flex;align-items:center;justify-content:center;color:#B8B0A6;vertical-align:middle;transform:rotate({{ ex.chevronRotation }}deg);transition:transform .18s ease;margin-left:4px;">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                        <span style="display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border-radius:999px;background:#FAF8F5;border:1px solid #F0ECE6;color:#7C746B;font-size:12.5px;font-weight:800;line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums;vertical-align:middle;margin-left:7px;">{{ ex.scheme }}</span>
                       </div>
                       <div style="display:flex;align-items:center;gap:8px;margin-top:7px;min-width:0;font-size:12.5px;color:#8F8A82;font-weight:700;line-height:1.35;">
                         <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:{{ ex.tintInk }};">{{ ex.primaryText }}</span>
@@ -247,9 +326,6 @@ html,body{margin:0;padding:0}
                           <span style="min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#A86F5F;">{{ ex.noteDisplay }}</span>
                         </sc-if>
                       </div>
-                    </div>
-                    <div style="flex:none;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:11px;background:{{ ex.expandBg }};color:{{ ex.expandColor }};">
-                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="display:block;transform:rotate({{ ex.chevronRotation }}deg);transition:transform .18s ease;"><path d="m9 6 6 6-6 6"/></svg>
                     </div>
                   </button>
 
@@ -286,19 +362,19 @@ html,body{margin:0;padding:0}
                         </div>
                       </div>
                       <div>
-                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">How to perform</div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Chal Aise Kar</div>
                         <sc-for list="{{ ex.steps }}" as="step" hint-placeholder-count="3">
                           <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ step }}</span></div>
                         </sc-for>
                       </div>
                       <div>
-                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Cues</div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Form Ka Funda</div>
                         <sc-for list="{{ ex.cues }}" as="cue" hint-placeholder-count="2">
                           <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:{{ ex.tintInk }};font-weight:800;">·</span><span>{{ cue }}</span></div>
                         </sc-for>
                       </div>
                       <div>
-                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Avoid</div>
+                        <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:6px;">Ye Mat Kar</div>
                         <sc-for list="{{ ex.mistakes }}" as="mistake" hint-placeholder-count="2">
                           <div style="display:flex;gap:9px;padding:4px 0;font-size:14px;color:#4A453F;line-height:1.45;"><span style="color:#B0654E;font-weight:800;">·</span><span>{{ mistake }}</span></div>
                         </sc-for>
@@ -635,12 +711,63 @@ class Component extends DCLogic {
       },
       'Back Squat': {
         type: 'image',
-        src: './assets/exercises/back-squat.jpg',
-        alt: 'A powerlifter completing a heavy back squat',
+        src: './assets/exercises/back-squat-guide.png',
+        thumbnail: './assets/exercises/thumbs/back-squat-thumb.png',
+        alt: 'A three-position back squat guide with quadriceps, glutes, and adductors highlighted on a white background',
         position: 'center center',
-        source: 'https://commons.wikimedia.org/wiki/File:Kirk-karwoski-squat.jpg',
-        author: 'FXShannon',
-        license: 'CC BY-SA 3.0',
+        source: './assets/exercises/back-squat-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Romanian Deadlift': {
+        type: 'image',
+        src: './assets/exercises/romanian-deadlift-guide.png',
+        thumbnail: './assets/exercises/thumbs/romanian-deadlift-thumb.png',
+        alt: 'A three-position Romanian deadlift guide with hamstrings, glutes, erectors, and lats highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/romanian-deadlift-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Leg Press / Walking Lunges': {
+        type: 'image',
+        src: './assets/exercises/walking-lunges-guide.png',
+        thumbnail: './assets/exercises/thumbs/walking-lunges-thumb.png',
+        alt: 'A three-position walking lunge guide with quadriceps, glutes, adductors, and hamstrings highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/walking-lunges-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Leg Curl': {
+        type: 'image',
+        src: './assets/exercises/leg-curl-guide.png',
+        thumbnail: './assets/exercises/thumbs/leg-curl-thumb.png',
+        alt: 'A three-position lying leg curl guide with hamstrings and calves highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/leg-curl-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Standing Calf Raise': {
+        type: 'image',
+        src: './assets/exercises/standing-calf-raise-guide.png',
+        thumbnail: './assets/exercises/thumbs/standing-calf-raise-thumb.png',
+        alt: 'A three-position standing calf raise guide with calves and soleus highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/standing-calf-raise-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Cable Crunch + Captain’s Chair': {
+        type: 'image',
+        src: './assets/exercises/cable-crunch-captains-chair-guide.png',
+        thumbnail: './assets/exercises/thumbs/cable-crunch-captains-chair-thumb.png',
+        alt: 'A four-panel guide for cable crunches and captain’s chair knee raises with abs and hip flexors highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/cable-crunch-captains-chair-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
       },
       'Lateral Raises': {
         type: 'image',
@@ -654,11 +781,62 @@ class Component extends DCLogic {
       'Conventional Deadlift': {
         type: 'image',
         src: './assets/exercises/conventional-deadlift.jpg',
+        thumbnail: './assets/exercises/thumbs/conventional-deadlift-thumb.jpg',
         alt: 'A lifter setting up for a conventional deadlift',
         position: 'center center',
         source: 'https://commons.wikimedia.org/wiki/File:Fit_young_man_doing_deadlift_exercise_in_gym.jpg',
         author: 'Nenad Stojkovic',
         license: 'CC BY 2.0',
+      },
+      'Front Squat / Leg Press': {
+        type: 'image',
+        src: './assets/exercises/front-squat.png',
+        thumbnail: './assets/exercises/thumbs/front-squat-thumb.png',
+        alt: 'A lifter in the starting position of a front squat as a representative image for front squat or leg press',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:Front-squat-1-857x1024.png',
+        author: 'Everkinetic',
+        license: 'CC BY-SA 3.0',
+      },
+      'Bulgarian Split Squat': {
+        type: 'image',
+        src: './assets/exercises/bulgarian-split-squat-cdc.png',
+        thumbnail: './assets/exercises/thumbs/bulgarian-split-squat-thumb.png',
+        alt: 'A lunge illustration used as a representative image for Bulgarian split squats',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:Lunge-CDC_strength_training_for_older_adults.gif',
+        author: 'CDC',
+        license: 'Public domain',
+      },
+      'Leg Extension': {
+        type: 'image',
+        src: './assets/exercises/leg-extension.jpg',
+        thumbnail: './assets/exercises/thumbs/leg-extension-thumb.jpg',
+        alt: 'A lifter using a leg extension machine',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:LegExtensionMachineExercise.JPG',
+        author: 'Vaibhav Rawat',
+        license: 'CC BY-SA 3.0',
+      },
+      'Seated Calf Raise': {
+        type: 'image',
+        src: './assets/exercises/seated-calf-raise.jpg',
+        thumbnail: './assets/exercises/thumbs/seated-calf-raise-thumb.jpg',
+        alt: 'A lifter performing a seated calf raise on a machine',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:SeatedCalfRaiseMachineExercise.JPG',
+        author: 'GeorgeStepanek',
+        license: 'CC BY-SA 3.0',
+      },
+      'Air Bike + Cable Crunch': {
+        type: 'image',
+        src: './assets/exercises/air-bike-cable-crunch-clean.png',
+        thumbnail: './assets/exercises/thumbs/air-bike-cable-crunch-thumb.png',
+        alt: 'A crunch diagram used as a representative image for the air bike and cable crunch finisher',
+        position: 'center center',
+        source: 'https://commons.wikimedia.org/wiki/File:Crunches-2.png',
+        author: 'Everkinetic',
+        license: 'CC BY-SA 3.0',
       },
     };
     const guide = (steps, cues, mistakes, substitutions, mediaName) => ({
@@ -669,30 +847,30 @@ class Component extends DCLogic {
       media: mediaName ? exerciseMedia[mediaName] : null,
     });
     const exerciseGuides = {
-      'Incline Barbell Bench': guide(['Set the bench to a low incline and plant feet firmly.', 'Unrack with shoulder blades pulled back and down.', 'Lower to upper chest, then press slightly back toward the rack.'], ['Keep wrists stacked over elbows.', 'Stop each set before shoulder position breaks.'], ['Flaring elbows straight out.', 'Bouncing the bar off the chest.'], ['Incline dumbbell press', 'Machine incline press'], 'Incline Barbell Bench'),
-      'Barbell Row': guide(['Hinge until the torso is firm and braced.', 'Pull the bar toward the lower ribs.', 'Lower until arms are long without losing back position.'], ['Think elbows to hips.', 'Keep the torso angle fixed.'], ['Standing up each rep.', 'Yanking with the lower back.'], ['Chest-supported row', 'Seated cable row'], 'Barbell Row'),
-      'Seated DB Shoulder Press': guide(['Sit tall with dumbbells at shoulder height.', 'Press up and slightly in until arms are long.', 'Lower with elbows a little forward of the torso.'], ['Ribs down, glutes tight.', 'Finish with biceps near ears.'], ['Overarching the lower back.', 'Letting dumbbells drift too far behind you.'], ['Machine shoulder press', 'Landmine press'], 'Seated DB Shoulder Press'),
-      'Pull-ups / Lat Pulldown': guide(['Start from a long-arm stretch.', 'Drive elbows down toward the ribs.', 'Control the return without shrugging.'], ['Chest proud.', 'Pull with elbows, not hands.'], ['Half reps.', 'Turning it into a biceps curl.'], ['Assisted pull-up', 'Neutral-grip pulldown'], 'Pull-ups / Lat Pulldown'),
-      'Triceps Pushdown': guide(['Set elbows close to the ribs.', 'Push the handle down until elbows lock softly.', 'Return until forearms rise without shoulders moving.'], ['Pin elbows in place.', 'Squeeze hard at the bottom.'], ['Leaning bodyweight into the handle.', 'Letting elbows drift forward.'], ['Cable overhead extension', 'Machine dip'], 'Triceps Pushdown'),
-      'EZ / Barbell Curl': guide(['Grip just outside shoulder width.', 'Curl without letting elbows move forward.', 'Lower slowly to a full arm stretch.'], ['Shoulders quiet.', 'Control the negative.'], ['Swinging the torso.', 'Cutting the bottom short.'], ['DB curl', 'Cable curl'], 'EZ / Barbell Curl'),
-      'Back Squat': guide(['Set bar firmly across upper back and brace.', 'Sit down between the hips with knees tracking toes.', 'Drive up through mid-foot and stay tight at the top.'], ['Brace before every rep.', 'Chest and hips rise together.'], ['Knees caving inward.', 'Relaxing at the bottom.'], ['Front squat', 'Leg press'], 'Back Squat'),
-      'Romanian Deadlift': guide(['Hold the bar close and unlock knees slightly.', 'Push hips back until hamstrings are loaded.', 'Stand tall by squeezing glutes, not leaning back.'], ['Bar stays close.', 'Hips move back, not down.'], ['Rounding the back.', 'Squatting the movement.'], ['DB Romanian deadlift', 'Hip thrust']),
-      'Leg Press / Walking Lunges': guide(['Set feet so knees can bend comfortably.', 'Lower under control through a pain-free range.', 'Press through the whole foot without locking knees hard.'], ['Smooth reps.', 'Knees follow toes.'], ['Letting hips tuck under deeply.', 'Rushing the bottom.'], ['Hack squat', 'Split squat']),
-      'Leg Curl': guide(['Line knees with the machine pivot.', 'Curl heels toward glutes.', 'Pause, then resist the pad back down.'], ['Squeeze at the top.', 'Keep hips pinned.'], ['Lifting hips off the pad.', 'Dropping the weight.'], ['Seated leg curl', 'Stability-ball curl']),
-      'Standing Calf Raise': guide(['Start with heels lowered into a stretch.', 'Rise tall onto the balls of the feet.', 'Pause briefly before lowering again.'], ['Big toe pressure.', 'Full stretch every rep.'], ['Bouncing through reps.', 'Rolling ankles outward.'], ['Seated calf raise', 'Leg-press calf raise']),
-      'Cable Crunch + Captain’s Chair': guide(['Crunch ribs toward pelvis on the cable.', 'Keep hips stable on knee raises.', 'Move slowly enough to feel abs, not momentum.'], ['Exhale as you crunch.', 'Control the pelvis.'], ['Pulling with arms.', 'Swinging the legs.'], ['Reverse crunch', 'Dead bug']),
-      'Flat DB Bench': guide(['Lie with dumbbells above chest and feet planted.', 'Lower slightly outside the chest.', 'Press up while keeping shoulders packed.'], ['Wrists stacked.', 'Elbows at a comfortable angle.'], ['Letting shoulders roll forward.', 'Clanging dumbbells at the top.'], ['Machine chest press', 'Push-ups']),
-      'One-Arm DB Row / Cable Row': guide(['Brace with a stable torso.', 'Reach long at the bottom.', 'Pull elbow toward the hip and squeeze the back.'], ['Long stretch, strong pull.', 'No torso twist.'], ['Shrugging the shoulder.', 'Pulling straight up to the armpit.'], ['Chest-supported DB row', 'Seated cable row']),
-      'Incline DB Press': guide(['Use a moderate incline and start DBs by upper chest.', 'Press up and slightly together.', 'Lower until chest and shoulders stay comfortable.'], ['Keep wrists neutral.', 'Control depth.'], ['Too steep an incline.', 'Overstretching the shoulder.'], ['Incline machine press', 'Low-incline push-up']),
-      'Lateral Raises': guide(['Hold DBs by sides with soft elbows.', 'Lift out and slightly forward to shoulder height.', 'Lower slowly until delts stay loaded.'], ['Lead with elbows.', 'Neck relaxed.'], ['Shrugging the traps.', 'Swinging from the hips.'], ['Cable lateral raise', 'Machine lateral raise'], 'Lateral Raises'),
-      'Dips / Close-Grip Bench': guide(['Choose the version that feels best on shoulders.', 'Lower under control with elbows tracking naturally.', 'Press up by driving through triceps.'], ['Pain-free depth.', 'Control the bottom.'], ['Dropping too deep.', 'Letting shoulders roll forward.'], ['Triceps pushdown', 'Machine dip']),
-      'Hammer Curl': guide(['Hold dumbbells with palms facing in.', 'Curl without moving upper arms.', 'Lower until elbows are straight but controlled.'], ['Thumbs up.', 'Elbows still.'], ['Swinging the weights.', 'Shortening the lower half.'], ['Rope cable curl', 'Cross-body hammer curl']),
-      'Conventional Deadlift': guide(['Set feet under hips and bar over mid-foot.', 'Brace, pull slack out of the bar, and push the floor away.', 'Lock out tall with glutes, then hinge the bar back down.'], ['Lats tight.', 'Bar stays close.'], ['Jerking the bar from the floor.', 'Leaning back at lockout.'], ['Trap-bar deadlift', 'Romanian deadlift'], 'Conventional Deadlift'),
-      'Front Squat / Leg Press': guide(['For front squat, keep elbows high and torso upright.', 'Descend with knees tracking toes.', 'Drive up without losing brace.'], ['Stay tall.', 'Mid-foot pressure.'], ['Collapsing elbows.', 'Letting heels lift.'], ['Goblet squat', 'Hack squat']),
-      'Bulgarian Split Squat': guide(['Set rear foot on bench and front foot far enough forward.', 'Lower until front leg does the work.', 'Drive through the whole front foot.'], ['Slow descent.', 'Front knee tracks toes.'], ['Pushing off the back leg.', 'Bouncing at the bottom.'], ['Walking lunge', 'Step-up']),
-      'Leg Extension': guide(['Set pad above the ankle and back against the seat.', 'Extend knees until quads squeeze.', 'Lower slowly without letting the stack slam.'], ['Hard top squeeze.', 'Controlled lowering.'], ['Kicking with momentum.', 'Lifting hips off the seat.'], ['Sissy squat', 'Terminal knee extension']),
-      'Seated Calf Raise': guide(['Set knees under the pad and heels low.', 'Raise heels as high as possible.', 'Pause, then lower into a deep stretch.'], ['Deliberate reps.', 'Full ankle range.'], ['Tiny partial reps.', 'Bouncing out of the stretch.'], ['Standing calf raise', 'Single-leg calf raise']),
-      'Air Bike + Cable Crunch': guide(['Use the air bike with steady trunk rotation.', 'Move to cable crunches with ribs curling toward pelvis.', 'Keep both movements controlled and crisp.'], ['Abs initiate the motion.', 'Breathe through each rep.'], ['Pulling the neck.', 'Rushing reps just to finish.'], ['Plank', 'Reverse crunch']),
+      'Incline Barbell Bench': guide(['Bench ko halka incline pe laga aur pair zameen me chipka.', 'Bar nikalte time shoulders peeche neeche jamake rakh.', 'Bar upper chest tak control me la, phir halka sa rack ki line me press kar.'], ['Kalai aur elbow ek line me rakh.', 'Form hilne se pehle set khatam kar.'], ['Elbow seedha bahar udane ka nahi.', 'Bar chest pe patakne ka nahi.'], ['Incline dumbbell press', 'Machine incline press'], 'Incline Barbell Bench'),
+      'Barbell Row': guide(['Hip se hinge maar aur body ko tight lock kar.', 'Bar ko lower ribs ki side kheench.', 'Neeche la, par back ka scene loose mat hone de.'], ['Elbow ko hip ki taraf kheench.', 'Poore set me torso ka angle same rakh.'], ['Har rep me khade hone ka nahi.', 'Lower back se jhatka dene ka nahi.'], ['Chest-supported row', 'Seated cable row'], 'Barbell Row'),
+      'Seated DB Shoulder Press': guide(['Seedha baith, dumbbell shoulder ke paas set kar.', 'Dumbbell upar aur thoda andar press kar.', 'Neeche laate waqt elbow halka aage rakh.'], ['Ribs andar, glutes tight.', 'Top pe biceps kaan ke paas lana.'], ['Kamar zyada todne ka nahi.', 'DB ko bahut peeche le jaane ka nahi.'], ['Machine shoulder press', 'Landmine press'], 'Seated DB Shoulder Press'),
+      'Pull-ups / Lat Pulldown': guide(['Bilkul stretch se start kar, haath lambe rehne de.', 'Elbow ko ribs ki taraf neeche kheench.', 'Upar ka kaam karke neeche control me laut.'], ['Chest upar rakh.', 'Haath nahi, elbow se pull maar.'], ['Half rep ka scene nahi.', 'Isko biceps curl banane ka nahi.'], ['Assisted pull-up', 'Neutral-grip pulldown'], 'Pull-ups / Lat Pulldown'),
+      'Triceps Pushdown': guide(['Elbow ko ribs ke paas chipka ke set ho ja.', 'Handle ko neeche daba jab tak elbow soft lock na ho.', 'Wapas upar la, par shoulder hilne ka nahi.'], ['Elbow wahi chipka ke rakh.', 'Neeche triceps ko zor se squeeze kar.'], ['Bodyweight daalke dhakka marne ka nahi.', 'Elbow aage bhaagne dene ka nahi.'], ['Cable overhead extension', 'Machine dip'], 'Triceps Pushdown'),
+      'EZ / Barbell Curl': guide(['Grip shoulder se thoda bahar rakh aur solid pakad.', 'Curl maar, par elbow ko aage nikalne mat de.', 'Neeche aaram se la aur full stretch le.'], ['Shoulder shaant rakh.', 'Negative ko control me chala.'], ['Body jhula bana ke curl karne ka nahi.', 'Neeche half rep chhodne ka nahi.'], ['DB curl', 'Cable curl'], 'EZ / Barbell Curl'),
+      'Back Squat': guide(['Bar pehle tight pakad, peeth jamake set ho ja.', 'Neeche aise baith ki ghutna toes ke line me rahe.', 'Phir pair se zameen dhakka maar aur upar solid aa.'], ['Har rep ke pehle pet tight kar.', 'Chest aur hips dono saath me upar aane ka.'], ['Ghutna andar girne ka nahi.', 'Neeche jaake body loose chhodne ka nahi.'], ['Front squat', 'Leg press'], 'Back Squat'),
+      'Romanian Deadlift': guide(['Bar body ke paas rakh aur ghutna halka sa soft rakh.', 'Hip ko peeche bhej jab tak hamstring full tight feel na ho.', 'Upar aate waqt glutes daba, peeche latakne ka nahi.'], ['Bar body se chipka ke rakh.', 'Hip peeche jayega, neeche nahi.'], ['Back gol karne ka nahi.', 'Isko squat banane ka nahi.'], ['DB Romanian deadlift', 'Hip thrust'], 'Romanian Deadlift'),
+      'Leg Press / Walking Lunges': guide(['Pair aise set kar ki ghutna araam se bend ho sake.', 'Neeche control me ja, jitna body clean handle kare utna hi.', 'Poore pair se push maar, ghutna hard lock mat kar.'], ['Rep smooth rakh, jhatka nahi.', 'Ghutna toes ke line me chalne de.'], ['Bahut neeche jaake hips tuck karne ka nahi.', 'Bottom se fatafat uchhalne ka nahi.'], ['Hack squat', 'Split squat'], 'Leg Press / Walking Lunges'),
+      'Leg Curl': guide(['Machine me ghutna pivot ke line me set kar.', 'Heel ko glutes ki taraf kheench.', 'Top pe second bhar rok, phir weight control me neeche la.'], ['Top pe hamstring ko zor se daba.', 'Hips pad pe chipka ke rakh.'], ['Hips upar uthane ka nahi.', 'Weight ko dhadaam se chhodne ka nahi.'], ['Seated leg curl', 'Stability-ball curl'], 'Leg Curl'),
+      'Standing Calf Raise': guide(['Heel ko neeche le ja aur stretch feel kar.', 'Big toe pe zor daalke poora upar uth.', 'Top pe second bhar rok, phir control me neeche aa.'], ['Pressure big toe side pe rakh.', 'Har rep me full stretch le.'], ['Bounce maar ke rep nikalne ka nahi.', 'Ankle bahar ghumane ka nahi.'], ['Seated calf raise', 'Leg-press calf raise'], 'Standing Calf Raise'),
+      'Cable Crunch + Captain’s Chair': guide(['Cable crunch me ribs ko pelvis ki taraf fold kar.', 'Captain chair pe hip stable rakhke ghutna upar la.', 'Dono movement aaram se kar, momentum se nahi.'], ['Crunch pe saans bahar nikal.', 'Pelvis ko control me rakh.'], ['Haath se kheenchne ka nahi.', 'Pair jhula bana ke uthane ka nahi.'], ['Reverse crunch', 'Dead bug'], 'Cable Crunch + Captain’s Chair'),
+      'Flat DB Bench': guide(['Bench pe letke dumbbell chest ke upar set kar aur pair jama.', 'DB ko chest ke bahar side me control se neeche la.', 'Phir upar press kar, shoulder packed hi rakh.'], ['Kalai seedhi rakh.', 'Elbow ko comfortable line me chala.'], ['Shoulder ko aage gol karne ka nahi.', 'Top pe dumbbell takrane ka nahi.'], ['Machine chest press', 'Push-ups']),
+      'One-Arm DB Row / Cable Row': guide(['Body ko stable rakh aur back tight kar.', 'Neeche stretch le, haath ko lamba jaane de.', 'Elbow ko hip ki taraf kheench aur back squeeze kar.'], ['Stretch full le, phir pull solid maar.', 'Torso ko twist karne ka nahi.'], ['Shoulder ko kaan tak chadhane ka nahi.', 'Elbow ko seedha armpit me kheenchne ka nahi.'], ['Chest-supported DB row', 'Seated cable row']),
+      'Incline DB Press': guide(['Moderate incline pe set ho aur DB upper chest ke paas rakh.', 'DB ko upar aur thoda sa andar press kar.', 'Neeche utna hi la jitna chest aur shoulder clean feel kare.'], ['Kalai neutral rakh.', 'Depth control me rakh.'], ['Bench ko bahut steep banane ka nahi.', 'Shoulder ko over-stretch dene ka nahi.'], ['Incline machine press', 'Low-incline push-up']),
+      'Lateral Raises': guide(['DB side me pakad aur elbow ko halka soft rakh.', 'DB ko side aur thoda aage shoulder height tak utha.', 'Neeche aaram se la, delts pe tension bana ke rakh.'], ['Elbow lead karega.', 'Neck ko chill rakh.'], ['Trap ko shrug karne ka nahi.', 'Hip se jhatka maarne ka nahi.'], ['Cable lateral raise', 'Machine lateral raise'], 'Lateral Raises'),
+      'Dips / Close-Grip Bench': guide(['Jo version shoulder ko zyada set lage wahi pakad.', 'Neeche control me ja, elbow natural line me rak.', 'Upar aate waqt triceps se zor laga.'], ['Pain-free depth hi rakh.', 'Bottom ka control tight rakh.'], ['Bahut neeche doobne ka nahi.', 'Shoulder ko aage roll karne ka nahi.'], ['Triceps pushdown', 'Machine dip']),
+      'Hammer Curl': guide(['Dumbbell ko palms-in grip me pakad.', 'Curl maar, par upper arm ko hilne mat de.', 'Neeche la jab tak elbow seedha na ho, par control chhod mat.'], ['Thumbs up hi rakh.', 'Elbow ko shaant rakh.'], ['Weight ko jhula bana ke uthane ka nahi.', 'Neeche ka aadha range khaane ka nahi.'], ['Rope cable curl', 'Cross-body hammer curl']),
+      'Conventional Deadlift': guide(['Pair hip ke niche set kar aur bar mid-foot pe rakh.', 'Pet tight kar, bar ka slack nikaal aur zameen ko dhakka maar.', 'Upar tall khada ho, phir hinge maar ke bar wapas neeche la.'], ['Lats ko tight pakad.', 'Bar body ke paas hi chalega.'], ['Floor se jhatka maar ke todne ka nahi.', 'Top pe peeche jhukne ka nahi.'], ['Trap-bar deadlift', 'Romanian deadlift'], 'Conventional Deadlift'),
+      'Front Squat / Leg Press': guide(['Front squat me elbow upar rakh aur torso seedha.', 'Neeche ja jab tak ghutna clean line me rahe.', 'Upar aate waqt brace chhodne ka nahi.'], ['Poora time tall rakh.', 'Pressure mid-foot pe rakh.'], ['Elbow neeche girne dene ka nahi.', 'Heel upar uthane ka nahi.'], ['Goblet squat', 'Hack squat'], 'Front Squat / Leg Press'),
+      'Bulgarian Split Squat': guide(['Rear foot bench pe set kar aur front foot ko aage sahi jagah rakh.', 'Neeche control se ja aur front leg pe kaam feel kar.', 'Poore front foot se push maar ke upar aa.'], ['Descent slow rakh.', 'Front knee toes ke line me rakh.'], ['Back leg se dhakka marne ka nahi.', 'Bottom pe bounce karne ka nahi.'], ['Walking lunge', 'Step-up'], 'Bulgarian Split Squat'),
+      'Leg Extension': guide(['Pad ankle ke upar set kar aur back seat pe chipka.', 'Ghutna seedha kar jab tak quads full squeeze na ho.', 'Weight ko control me neeche la, stack patakne ka nahi.'], ['Top pe hard squeeze de.', 'Neeche aate waqt control rakh.'], ['Momentum se kick maarne ka nahi.', 'Hips seat se uthane ka nahi.'], ['Sissy squat', 'Terminal knee extension'], 'Leg Extension'),
+      'Seated Calf Raise': guide(['Knee pad ke niche set ho aur heel ko neeche stretch me le ja.', 'Heel ko jitna ho sake utna upar uthaa.', 'Top pe rok, phir full stretch me neeche aa.'], ['Rep aaram se chala.', 'Ankle ka full range use kar.'], ['Chhota chhota half rep marne ka nahi.', 'Stretch se bounce karke uthane ka nahi.'], ['Standing calf raise', 'Single-leg calf raise'], 'Seated Calf Raise'),
+      'Air Bike + Cable Crunch': guide(['Air bike pe controlled twist ke saath rep nikaal.', 'Phir cable crunch me ribs ko pelvis ki taraf fold kar.', 'Dono ko clean tempo me kar, bas jaldi niptaane ke liye nahi.'], ['Motion abs se start kar.', 'Har rep pe saans sambhal ke chala.'], ['Gardan kheenchne ka nahi.', 'Sirf khatam karne ke liye faltu speed maarne ka nahi.'], ['Plank', 'Reverse crunch'], 'Air Bike + Cable Crunch'),
     };
     const cardioSteps = [
       { name: 'Easy warm-up', detail: '3–5 min · gradually lift the pace' },
@@ -810,12 +988,9 @@ class Component extends DCLogic {
         thumbnail: media && media.thumbnail ? media.thumbnail : '',
         thumbnailAlt: media ? media.alt : '',
         hasThumbnail: !!(media && media.thumbnail),
-        showNumberTile: !(media && media.thumbnail),
         mediaIsVideo: !!media && media.type === 'video',
         mediaIsImage: !!media && media.type !== 'video',
         expanded,
-        expandBg: expanded ? tone.soft : '#FAF8F5',
-        expandColor: expanded ? tone.color : '#B8B0A6',
         chevronRotation: expanded ? -90 : 90,
         noteDisplay,
         hasNoteDisplay: !!noteDisplay,
@@ -890,6 +1065,7 @@ class Component extends DCLogic {
       isTraining, isCalm: !isTraining,
       restMessage: today.message || '',
       exercises: isTraining ? tintEx(D.sessions[today.session], t, today.session) : [],
+      todayExerciseSummary: isTraining ? D.sessions[today.session].length + ' moves · primary target shown' : '',
       warmupItems: D.warmupItems, progressionItems: D.progressionItems,
       warmOpen: this.state.warmOpen, progOpen: this.state.progOpen,
       warmRotate: this.state.warmOpen ? 'rotate(180deg)' : 'rotate(0deg)',
