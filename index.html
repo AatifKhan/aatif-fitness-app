@@ -43,39 +43,54 @@ html,body{margin:0;padding:0}
         <div style="background:#fff;border:1px solid #F0ECE6;border-radius:24px;padding:22px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:16px;">
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
             <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#A8A096;font-weight:700;">Today's Training</div>
-            <div style="font-size:12px;font-weight:700;letter-spacing:.02em;padding:5px 11px;border-radius:999px;background:{{ sessionSoft }};color:{{ sessionColor }};">{{ sessionTag }}</div>
           </div>
-          <div style="font-family:'Schibsted Grotesk';font-size:25px;font-weight:600;letter-spacing:-.01em;margin-top:10px;display:flex;align-items:center;gap:10px;">
-            <span style="width:9px;height:9px;border-radius:999px;background:{{ sessionColor }};display:inline-block;"></span>{{ sessionTitle }}
+          <div style="display:flex;gap:14px;align-items:flex-start;margin-top:10px;">
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Schibsted Grotesk';font-size:25px;font-weight:600;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;">
+                <span style="width:9px;height:9px;border-radius:999px;background:{{ sessionColor }};display:inline-block;flex:none;"></span>{{ sessionTitle }}
+              </div>
+              <sc-if value="{{ hasTargetFocus }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;gap:6px;margin-top:11px;max-width:142px;">
+                <sc-for list="{{ targetFocusTiles }}" as="focus" hint-placeholder-count="3">
+                  <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:12px;padding:8px 10px;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                    <div style="font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#A8A096;font-weight:900;line-height:1;">{{ focus.label }}</div>
+                    <div style="color:#26221E;font-size:13px;font-weight:850;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ focus.value }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+            <sc-if value="{{ hasTodayImage }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:none;width:128px;height:158px;border-radius:18px;border:1px solid #F0ECE6;background:#FAF8F5;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+              <img src="{{ todayImage.src }}" alt="{{ todayImage.alt }}" loading="lazy" style="display:block;width:100%;height:100%;object-fit:{{ todayImageFit }};object-position:{{ todayImage.position }};">
+            </div>
+            </sc-if>
           </div>
 
           <!-- TRAINING DAY DETAIL -->
           <sc-if value="{{ isTraining }}" hint-placeholder-val="{{ false }}">
           <div>
-            <!-- Warm-up (collapsible) -->
-            <button onClick="{{ toggleWarm }}" style="width:100%;background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:13px 15px;margin-top:18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-family:inherit;">
-              <span style="display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;color:#3A352F;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E8593A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                Warm-up · ~8–10 min
-              </span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8A096" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .25s;transform:{{ warmRotate }};"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-            <sc-if value="{{ warmOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="padding:14px 6px 2px;">
-              <sc-for list="{{ warmupItems }}" as="w" hint-placeholder-count="3">
-                <div style="display:flex;gap:10px;padding:7px 0;font-size:14.5px;color:#5A554E;line-height:1.45;">
-                  <span style="color:#E8593A;font-weight:700;">·</span><span>{{ w }}</span>
-                </div>
-              </sc-for>
-            </div>
-            </sc-if>
-
             <!-- Exercises -->
             <div style="margin-top:18px;">
-              <div style="margin-bottom:10px;">
-                <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:3px;">Exercises</div>
-                <div style="font-size:13px;color:#8F8A82;font-weight:650;line-height:1.35;">{{ todayExerciseSummary }}</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;">
+                <div style="min-width:0;">
+                  <div style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#A8A096;font-weight:800;margin-bottom:3px;">Exercises</div>
+                  <div style="font-size:13px;color:#8F8A82;font-weight:650;line-height:1.35;">{{ todayExerciseSummary }}</div>
+                </div>
+                <button onClick="{{ toggleWarm }}" aria-expanded="{{ warmOpen }}" style="flex:none;background:#FAF8F5;border:1px solid #F0ECE6;border-radius:999px;padding:7px 10px;display:flex;align-items:center;gap:6px;cursor:pointer;font-family:inherit;color:#6D665F;font-size:12.5px;font-weight:800;line-height:1;">
+                  Warm-up
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#A8A096" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .25s;transform:{{ warmRotate }};"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
               </div>
+              <sc-if value="{{ warmOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#FAF8F5;border:1px solid #F0ECE6;border-radius:14px;padding:10px 12px;margin-bottom:10px;">
+                <sc-for list="{{ warmupItems }}" as="w" hint-placeholder-count="3">
+                  <div style="display:flex;gap:8px;padding:5px 0;font-size:13.5px;color:#5A554E;line-height:1.4;">
+                    <span style="color:#E8593A;font-weight:800;">·</span><span>{{ w }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
               <sc-for list="{{ exercises }}" as="ex" hint-placeholder-count="6">
                 <div style="border-top:1px solid #F2EEE8;padding:10px 0;">
                   <button onClick="{{ ex.toggle }}" aria-expanded="{{ ex.expanded }}" style="width:100%;background:transparent;border:none;padding:0;text-align:left;font-family:inherit;cursor:pointer;display:flex;gap:12px;align-items:center;" style-active="transform:scale(.995)">
@@ -604,48 +619,48 @@ class Component extends DCLogic {
     };
     const workoutImages = {
       'Upper A': {
-        src: './assets/workouts/upper-a-bench-press.jpg',
-        alt: 'A lifter performing a bench press with a spotter',
+        src: './assets/workouts/upper-a-personal.png',
+        alt: 'A personalized clothed fitness avatar with Upper A target areas highlighted in red',
         label: 'Pressing focus',
-        caption: 'Representative upper-body press image',
+        caption: 'Generated personalized Upper A target guide',
         position: 'center center',
-        source: 'https://commons.wikimedia.org/wiki/File:Bench_press_1.jpg',
-        author: 'Lance Cpl. Ronald W. Stauffer',
-        license: 'Public domain',
-        licenseUrl: 'https://commons.wikimedia.org/wiki/File:Bench_press_1.jpg',
-      },
-      'Lower A': {
-        src: './assets/workouts/lower-a-squat.jpg',
-        alt: 'A powerlifter completing a heavy back squat',
-        label: 'Squat focus',
-        caption: 'Representative lower-body squat image',
-        position: 'center center',
-        source: 'https://commons.wikimedia.org/wiki/File:Kirk-karwoski-squat.jpg',
-        author: 'FXShannon',
-        license: 'CC BY-SA 3.0',
-        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
-      },
-      'Upper B': {
-        src: './assets/workouts/upper-b-lateral-raise.jpg',
-        alt: 'A lifter performing dumbbell lateral raises',
-        label: 'Delts + press',
-        caption: 'Representative upper-body accessory image',
-        position: 'center center',
-        source: 'https://commons.wikimedia.org/wiki/File:DumbbellLateralRaise.JPG',
-        author: 'GeorgeStepanek',
-        license: 'CC BY-SA 3.0',
-        licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
-      },
-      'Lower B': {
-        src: './assets/exercises/conventional-deadlift-guide.png',
-        alt: 'A three-position conventional deadlift guide with posterior-chain muscles highlighted',
-        label: 'Hinge focus',
-        caption: 'Generated posterior-chain guide',
-        position: 'center center',
-        source: './assets/exercises/conventional-deadlift-guide.png',
+        source: './assets/workouts/upper-a-personal.png',
         author: 'Custom generated',
         license: 'Local guide',
-        licenseUrl: './assets/exercises/conventional-deadlift-guide.png',
+        licenseUrl: './assets/workouts/upper-a-personal.png',
+      },
+      'Lower A': {
+        src: './assets/workouts/lower-a-personal.png',
+        alt: 'A personalized clothed fitness avatar with Lower A target areas highlighted in red',
+        label: 'Squat focus',
+        caption: 'Generated personalized Lower A target guide',
+        position: 'center center',
+        source: './assets/workouts/lower-a-personal.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+        licenseUrl: './assets/workouts/lower-a-personal.png',
+      },
+      'Upper B': {
+        src: './assets/workouts/upper-b-personal.png',
+        alt: 'A personalized clothed fitness avatar with Upper B target areas highlighted in red',
+        label: 'Delts + press',
+        caption: 'Generated personalized Upper B target guide',
+        position: 'center center',
+        source: './assets/workouts/upper-b-personal.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+        licenseUrl: './assets/workouts/upper-b-personal.png',
+      },
+      'Lower B': {
+        src: './assets/workouts/lower-b-personal-split-avatar.png',
+        alt: 'A two-angle personalized clothed fitness avatar with Lower B target areas highlighted in red',
+        label: 'Lower B targets',
+        caption: 'Generated two-angle personalized muscle target guide',
+        position: 'center center',
+        source: './assets/workouts/lower-b-personal-split-avatar.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+        licenseUrl: './assets/workouts/lower-b-personal-split-avatar.png',
       },
     };
     const exerciseMedia = {
@@ -1048,6 +1063,31 @@ class Component extends DCLogic {
         toggle: () => this.setState({ expandedExerciseKey: expanded ? null : key }),
       };
     });
+    const sessionFocusTiles = sessionName => {
+      const tiles = {
+        'Upper A': [
+          { label: 'Main', value: 'Press' },
+          { label: 'Support', value: 'Pull' },
+          { label: 'Finish', value: 'Arms' },
+        ],
+        'Lower A': [
+          { label: 'Main', value: 'Squat' },
+          { label: 'Support', value: 'Hinge' },
+          { label: 'Finish', value: 'Core' },
+        ],
+        'Upper B': [
+          { label: 'Main', value: 'Press' },
+          { label: 'Support', value: 'Row' },
+          { label: 'Finish', value: 'Delts' },
+        ],
+        'Lower B': [
+          { label: 'Main', value: 'Hinge' },
+          { label: 'Support', value: 'Squat' },
+          { label: 'Finish', value: 'Core' },
+        ],
+      };
+      return tiles[sessionName] || [];
+    };
     const sel = this.state.selectedDay;
     const detailOpen = (sel !== null && sel !== undefined);
     let detail = null;
@@ -1061,7 +1101,7 @@ class Component extends DCLogic {
         tag: dd.kind === 'Cardio' ? 'Cardio' : dd.kind === 'Rest' ? 'Rest' : dd.kind,
         isTraining: isTr, isCardio: dd.kind === 'Cardio', isRest: dd.kind === 'Rest',
         exercises: isTr ? tintEx(D.sessions[dd.session], dtone, dd.session) : [],
-        exerciseSummary: isTr ? D.sessions[dd.session].length + ' moves · primary target shown' : '',
+        exerciseSummary: isTr ? D.sessions[dd.session].length + ' moves' : '',
         image: isTr ? D.workoutImages[dd.session] : null,
         message: dd.message || '',
       };
@@ -1116,7 +1156,12 @@ class Component extends DCLogic {
       isTraining, isCalm: !isTraining,
       restMessage: today.message || '',
       exercises: isTraining ? tintEx(D.sessions[today.session], t, today.session) : [],
-      todayExerciseSummary: isTraining ? D.sessions[today.session].length + ' moves · primary target shown' : '',
+      todayExerciseSummary: isTraining ? D.sessions[today.session].length + ' moves' : '',
+      targetFocusTiles: isTraining ? sessionFocusTiles(today.session) : [],
+      hasTargetFocus: isTraining,
+      todayImage: isTraining ? D.workoutImages[today.session] : null,
+      todayImageFit: 'contain',
+      hasTodayImage: isTraining && !!D.workoutImages[today.session],
       warmupItems: D.warmupItems, progressionItems: D.progressionItems,
       warmOpen: this.state.warmOpen, progOpen: this.state.progOpen,
       warmRotate: this.state.warmOpen ? 'rotate(180deg)' : 'rotate(0deg)',
