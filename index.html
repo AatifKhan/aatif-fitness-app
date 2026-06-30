@@ -585,10 +585,10 @@ class Component extends DCLogic {
     ];
     const sessions = {
       'Upper A': [
-        { name: 'Incline Barbell Bench', scheme: '4 × 6–8',  rest: '2–3 min', note: 'Main press', primaryMuscles: ['Upper chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Set the shoulder blades down, touch high chest, and press slightly back over the shoulders.' },
+        { name: 'Flat DB Bench', scheme: '4 × 6–8',  rest: '2–3 min', note: 'Horizontal press', primaryMuscles: ['Chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Let the dumbbells travel low and wide, then press up while keeping shoulders packed.' },
         { name: 'Barbell Row', scheme: '3 × 8–10', rest: '2 min', note: '', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Brace hard, keep the torso angle steady, and pull the bar toward the lower ribs.' },
-        { name: 'Seated DB Shoulder Press', scheme: '3 × 8–10', rest: '90 sec', note: '', primaryMuscles: ['Shoulders'], secondaryMuscles: ['Triceps', 'Upper chest'], cue: 'Start with elbows slightly forward, keep ribs down, and finish with biceps near the ears.' },
         { name: 'Pull-ups / Lat Pulldown', scheme: '3 × 8–10', rest: '90 sec', note: '', primaryMuscles: ['Lats'], secondaryMuscles: ['Mid-back', 'Biceps'], cue: 'Lead with the elbows, pull the chest toward the bar, and avoid shrugging at the top.' },
+        { name: 'Lateral Raises', scheme: '3 × 12–15', rest: '60 sec', note: 'Lateral delts', primaryMuscles: ['Side delts'], secondaryMuscles: ['Traps'], cue: 'Lift out and slightly forward, stop around shoulder height, and keep the neck relaxed.' },
         { name: 'Triceps Pushdown', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with curls', primaryMuscles: ['Triceps'], secondaryMuscles: ['Forearms'], cue: 'Pin the elbows by your sides and lock out by squeezing the triceps, not by leaning over the handle.' },
         { name: 'EZ / Barbell Curl', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with pushdowns', primaryMuscles: ['Biceps'], secondaryMuscles: ['Forearms'], cue: 'Keep shoulders quiet, curl through the elbow, and lower under control.' },
       ],
@@ -601,17 +601,19 @@ class Component extends DCLogic {
         { name: 'Cable Crunch + Captain\u2019s Chair', scheme: '2 each', rest: '45 sec', note: 'Core finisher', primaryMuscles: ['Abs'], secondaryMuscles: ['Hip flexors'], cue: 'Round the ribs toward the pelvis on crunches, then lift knees without swinging.' },
       ],
       'Upper B': [
-        { name: 'Flat DB Bench', scheme: '4 × 8–10', rest: '2–3 min', note: 'Main press', primaryMuscles: ['Chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Let the dumbbells travel low and wide, then press up while keeping shoulders packed.' },
-        { name: 'One-Arm DB Row / Cable Row', scheme: '3 × 10–12', rest: '90 sec', note: '', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Reach long at the bottom, then pull the elbow toward the hip without twisting open.' },
-        { name: 'Incline DB Press', scheme: '3 × 10–12', rest: '90 sec', note: '', primaryMuscles: ['Upper chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Use a modest incline, keep wrists stacked, and press until arms are long but not loose.' },
-        { name: 'Lateral Raises', scheme: '3 × 12–15', rest: '60 sec', note: '', primaryMuscles: ['Side delts'], secondaryMuscles: ['Traps'], cue: 'Lift out and slightly forward, stop around shoulder height, and keep the neck relaxed.' },
-        { name: 'Dips / Close-Grip Bench', scheme: '3 × 8–10', rest: '90 sec', note: 'Superset with curls', primaryMuscles: ['Triceps'], secondaryMuscles: ['Chest', 'Front delts'], cue: 'Keep elbows controlled and use a pain-free depth; choose close-grip bench if shoulders complain.' },
+        { name: 'Incline DB Press', scheme: '4 × 8–10', rest: '2–3 min', note: 'Incline press', primaryMuscles: ['Upper chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Use a modest incline, keep wrists stacked, and press until arms are long but not loose.' },
+        { name: 'Pull-ups / Lat Pulldown', scheme: '3 × 8–10', rest: '90 sec', note: 'Vertical pull', primaryMuscles: ['Lats'], secondaryMuscles: ['Mid-back', 'Biceps'], cue: 'Lead with the elbows, pull the chest toward the bar, and avoid shrugging at the top.' },
+        { name: 'One-Arm DB Row / Cable Row', scheme: '3 × 10–12', rest: '90 sec', note: 'First row', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Reach long at the bottom, then pull the elbow toward the hip without twisting open.' },
+        { name: 'Barbell Row', scheme: '3 × 8–10', rest: '2 min', note: 'Second row', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Brace hard, keep the torso angle steady, and pull the bar toward the lower ribs.' },
+        { name: 'Rear Delt Fly / Face Pull', scheme: '3 × 12–15', rest: '60 sec', note: 'Rear delts', primaryMuscles: ['Rear delts'], secondaryMuscles: ['Mid-back', 'Rotator cuff'], cue: 'Pull wide with control, keep traps quiet, and finish with the shoulders open instead of shrugged.' },
+        { name: 'Dips / Close-Grip Bench', scheme: '3 × 8–10', rest: '90 sec', note: 'Triceps', primaryMuscles: ['Triceps'], secondaryMuscles: ['Chest', 'Front delts'], cue: 'Keep elbows controlled and use a pain-free depth; choose close-grip bench if shoulders complain.' },
         { name: 'Hammer Curl', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with dips', primaryMuscles: ['Biceps'], secondaryMuscles: ['Brachialis', 'Forearms'], cue: 'Keep palms facing in, elbows still, and squeeze without swinging the torso.' },
       ],
       'Lower B': [
         { name: 'Conventional Deadlift', scheme: '3 × 5–6', rest: '3 min', note: 'Main lift', primaryMuscles: ['Glutes', 'Hamstrings'], secondaryMuscles: ['Erectors', 'Lats', 'Traps'], cue: 'Pull slack from the bar, push the floor away, and finish tall without leaning back.' },
         { name: 'Front Squat / Leg Press', scheme: '3 × 8–10', rest: '2 min', note: '', primaryMuscles: ['Quads'], secondaryMuscles: ['Glutes', 'Core'], cue: 'Stay upright and braced; on leg press, use a controlled depth without hips tucking under.' },
-        { name: 'Bulgarian Split Squat', scheme: '3 × 10–12 / leg', rest: '90 sec', note: '', primaryMuscles: ['Quads', 'Glutes'], secondaryMuscles: ['Adductors', 'Hamstrings'], cue: 'Keep the front foot planted, descend under control, and drive through the whole foot.' },
+        { name: 'Leg Curl', scheme: '3 × 10–12', rest: '60 sec', note: 'Hamstring curl', primaryMuscles: ['Hamstrings'], secondaryMuscles: ['Calves'], cue: 'Curl smoothly, pause briefly at the squeeze, and resist the pad on the way down.' },
+        { name: 'Bulgarian Split Squat', scheme: '3 × 10–12 / leg', rest: '90 sec', note: 'Quad support', primaryMuscles: ['Quads', 'Glutes'], secondaryMuscles: ['Adductors', 'Hamstrings'], cue: 'Keep the front foot planted, descend under control, and drive through the whole foot.' },
         { name: 'Leg Extension', scheme: '3 × 12–15', rest: '60 sec', note: '', primaryMuscles: ['Quads'], secondaryMuscles: ['Hip flexors'], cue: 'Set the pad above the ankle, squeeze hard at the top, and lower slowly.' },
         { name: 'Seated Calf Raise', scheme: '4 × 10–15', rest: '60 sec', note: '', primaryMuscles: ['Soleus'], secondaryMuscles: ['Calves'], cue: 'Use a deep stretch, pause at the top, and keep reps deliberate.' },
         { name: 'Air Bike + Cable Crunch', scheme: '2 each', rest: '45 sec', note: 'Core finisher', primaryMuscles: ['Abs'], secondaryMuscles: ['Obliques', 'Hip flexors'], cue: 'Move ribs toward hips on every rep and keep the bike work crisp rather than frantic.' },
@@ -824,6 +826,16 @@ class Component extends DCLogic {
         author: 'Custom generated',
         license: 'Local guide',
       },
+      'Rear Delt Fly / Face Pull': {
+        type: 'image',
+        src: './assets/exercises/rear-delt-fly-face-pull-guide.png',
+        thumbnail: './assets/exercises/thumbs/rear-delt-fly-face-pull-thumb.png',
+        alt: 'A four-panel rear delt fly and face pull guide with rear delts highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/rear-delt-fly-face-pull-guide.png',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
       'Dips / Close-Grip Bench': {
         type: 'image',
         src: './assets/exercises/dips-guide.png',
@@ -929,6 +941,7 @@ class Component extends DCLogic {
       'One-Arm DB Row / Cable Row': guide(['Body ko stable rakh aur back tight kar.', 'Neeche stretch le, haath ko lamba jaane de.', 'Elbow ko hip ki taraf kheench aur back squeeze kar.'], ['Stretch full le, phir pull solid maar.', 'Torso ko twist karne ka nahi.'], ['Shoulder ko kaan tak chadhane ka nahi.', 'Elbow ko seedha armpit me kheenchne ka nahi.'], ['Chest-supported DB row', 'Seated cable row'], 'One-Arm DB Row / Cable Row'),
       'Incline DB Press': guide(['Moderate incline pe set ho aur DB upper chest ke paas rakh.', 'DB ko upar aur thoda sa andar press kar.', 'Neeche utna hi la jitna chest aur shoulder clean feel kare.'], ['Kalai neutral rakh.', 'Depth control me rakh.'], ['Bench ko bahut steep banane ka nahi.', 'Shoulder ko over-stretch dene ka nahi.'], ['Incline machine press', 'Low-incline push-up'], 'Incline DB Press'),
       'Lateral Raises': guide(['DB side me pakad aur elbow ko halka soft rakh.', 'DB ko side aur thoda aage shoulder height tak utha.', 'Neeche aaram se la, delts pe tension bana ke rakh.'], ['Elbow lead karega.', 'Neck ko chill rakh.'], ['Trap ko shrug karne ka nahi.', 'Hip se jhatka maarne ka nahi.'], ['Cable lateral raise', 'Machine lateral raise'], 'Lateral Raises'),
+      'Rear Delt Fly / Face Pull': guide(['Cable ya dumbbell ko light rakho aur chest tall set karo.', 'Elbow ko wide line me kheench, haath ko face/shoulder height tak lao.', 'End pe rear delts squeeze karo, phir control me wapas jao.'], ['Trap ko chill rakh.', 'Movement rear shoulder se start kar.'], ['Weight heavy karke shrug karne ka nahi.', 'Lower back se jhatka dene ka nahi.'], ['Reverse pec deck', 'Band face pull'], 'Rear Delt Fly / Face Pull'),
       'Dips / Close-Grip Bench': guide(['Jo version shoulder ko zyada set lage wahi pakad.', 'Neeche control me ja, elbow natural line me rak.', 'Upar aate waqt triceps se zor laga.'], ['Pain-free depth hi rakh.', 'Bottom ka control tight rakh.'], ['Bahut neeche doobne ka nahi.', 'Shoulder ko aage roll karne ka nahi.'], ['Triceps pushdown', 'Machine dip'], 'Dips / Close-Grip Bench'),
       'Hammer Curl': guide(['Dumbbell ko palms-in grip me pakad.', 'Curl maar, par upper arm ko hilne mat de.', 'Neeche la jab tak elbow seedha na ho, par control chhod mat.'], ['Thumbs up hi rakh.', 'Elbow ko shaant rakh.'], ['Weight ko jhula bana ke uthane ka nahi.', 'Neeche ka aadha range khaane ka nahi.'], ['Rope cable curl', 'Cross-body hammer curl'], 'Hammer Curl'),
       'Conventional Deadlift': guide(['Pair hip ke niche set kar aur bar mid-foot pe rakh.', 'Pet tight kar, bar ka slack nikaal aur zameen ko dhakka maar.', 'Upar tall khada ho, phir hinge maar ke bar wapas neeche la.'], ['Lats ko tight pakad.', 'Bar body ke paas hi chalega.'], ['Floor se jhatka maar ke todne ka nahi.', 'Top pe peeche jhukne ka nahi.'], ['Trap-bar deadlift', 'Romanian deadlift'], 'Conventional Deadlift'),
@@ -939,28 +952,28 @@ class Component extends DCLogic {
       'Air Bike + Cable Crunch': guide(['Air bike pe controlled twist ke saath rep nikaal.', 'Phir cable crunch me ribs ko pelvis ki taraf fold kar.', 'Dono ko clean tempo me kar, bas jaldi niptaane ke liye nahi.'], ['Motion abs se start kar.', 'Har rep pe saans sambhal ke chala.'], ['Gardan kheenchne ka nahi.', 'Sirf khatam karne ke liye faltu speed maarne ka nahi.'], ['Plank', 'Reverse crunch'], 'Air Bike + Cable Crunch'),
     };
     const cardioSteps = [
-      { name: 'Easy warm-up', detail: '3–5 min · gradually lift the pace' },
-      { name: 'Zone-2 steady state', detail: '30–40 min · conversational, ~60–70% max HR' },
-      { name: 'Cool down', detail: '3–5 min easy + light stretch' },
+      { name: 'Walking', detail: '20–40 min easy steps · conversational pace' },
+      { name: 'Mobility', detail: '5–10 min · hips, T-spine, shoulders, ankles' },
+      { name: 'Optional easy cardio', detail: '20–30 min Zone-2 only if energy is good' },
     ];
     // index 0..6 = Sun..Sat
     const map = [
-      { kind: 'Rest',   title: 'Full rest',     message: 'Full rest today. Sleep well, eat well, and let the week\u2019s work land. Nothing to do but recover.' },
+      { kind: 'Rest',   title: 'Full rest',     message: 'Full rest today: 7–9 hours sleep, easy steps, and solid food. Nothing heavy — just let the week\u2019s work land.' },
       { kind: 'Upper',  title: 'Upper A',       session: 'Upper A' },
       { kind: 'Lower',  title: 'Lower A',       session: 'Lower A' },
-      { kind: 'Cardio', title: 'Zone-2 Cardio', message: 'Active recovery — 30–40 min of easy Zone-2 cardio. Keep it conversational; you should be able to hold a sentence.' },
+      { kind: 'Cardio', title: 'Rest / Light Activity', message: 'Recovery day: walk, do mobility, and add optional easy cardio only if it feels low fatigue.' },
       { kind: 'Upper',  title: 'Upper B',       session: 'Upper B' },
       { kind: 'Lower',  title: 'Lower B',       session: 'Lower B' },
-      { kind: 'Cardio', title: 'Zone-2 Cardio', message: '30–40 min of easy Zone-2 cardio. Nothing heavy — just move and breathe.' },
+      { kind: 'Cardio', title: 'Optional Easy Cardio', message: 'Rest or optional easy cardio. Keep it low fatigue only: relaxed steps, mobility, or short Zone-2.' },
     ];
     const week = [
-      { day: 'Mon', kind: 'Upper',  type: 'Upper A',       note: 'Bench · row · press · arms', idx: 1 },
+      { day: 'Mon', kind: 'Upper',  type: 'Upper A',       note: 'Flat press · row · pull · delts', idx: 1 },
       { day: 'Tue', kind: 'Lower',  type: 'Lower A',       note: 'Squat · RDL · legs · core', idx: 2 },
-      { day: 'Wed', kind: 'Cardio', type: 'Zone-2 Cardio', note: 'Rest + 30–40 min easy', idx: 3 },
-      { day: 'Thu', kind: 'Upper',  type: 'Upper B',       note: 'DB press · row · incline press · arms', idx: 4 },
-      { day: 'Fri', kind: 'Lower',  type: 'Lower B',       note: 'Deadlift · front squat · legs', idx: 5 },
-      { day: 'Sat', kind: 'Cardio', type: 'Zone-2 Cardio', note: '30–40 min easy', idx: 6 },
-      { day: 'Sun', kind: 'Rest',   type: 'Full rest',     note: 'Recover fully', idx: 0 },
+      { day: 'Wed', kind: 'Cardio', type: 'Rest / Light Activity', note: 'Walk · mobility · optional easy', idx: 3 },
+      { day: 'Thu', kind: 'Upper',  type: 'Upper B',       note: 'Incline · pull · two rows · rear delts', idx: 4 },
+      { day: 'Fri', kind: 'Lower',  type: 'Lower B',       note: 'Deadlift · quads · curl · calves', idx: 5 },
+      { day: 'Sat', kind: 'Cardio', type: 'Optional Easy Cardio', note: 'Low fatigue activity only', idx: 6 },
+      { day: 'Sun', kind: 'Rest',   type: 'Full rest',     note: 'Sleep · steps · food', idx: 0 },
     ];
     const dinnersByIdx = {
       1: 'Grilled white fish + potatoes + green beans',
@@ -1066,9 +1079,9 @@ class Component extends DCLogic {
     const sessionFocusTiles = sessionName => {
       const tiles = {
         'Upper A': [
-          { label: 'Main', value: 'Press' },
-          { label: 'Support', value: 'Pull' },
-          { label: 'Finish', value: 'Arms' },
+          { label: 'Main', value: 'Flat press' },
+          { label: 'Support', value: 'Row/pull' },
+          { label: 'Finish', value: 'Delts' },
         ],
         'Lower A': [
           { label: 'Main', value: 'Squat' },
@@ -1076,14 +1089,14 @@ class Component extends DCLogic {
           { label: 'Finish', value: 'Core' },
         ],
         'Upper B': [
-          { label: 'Main', value: 'Press' },
-          { label: 'Support', value: 'Row' },
-          { label: 'Finish', value: 'Delts' },
+          { label: 'Main', value: 'Incline' },
+          { label: 'Support', value: '2 rows' },
+          { label: 'Finish', value: 'Rear delts' },
         ],
         'Lower B': [
           { label: 'Main', value: 'Hinge' },
-          { label: 'Support', value: 'Squat' },
-          { label: 'Finish', value: 'Core' },
+          { label: 'Support', value: 'Quads' },
+          { label: 'Finish', value: 'Curl/core' },
         ],
       };
       return tiles[sessionName] || [];
