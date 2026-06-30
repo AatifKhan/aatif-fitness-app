@@ -488,7 +488,7 @@ html,body{margin:0;padding:0}
         <!-- Daily scoop -->
         <div style="background:#FCEBE5;border:1px solid #F6DACE;border-radius:22px;padding:18px 20px;margin-bottom:14px;display:flex;align-items:center;gap:14px;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8593A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1.2 8.2a4.8 4.8 0 0 1-9.6 0Z"/><path d="M9 21h6M12 16v5"/></svg>
-          <div><div style="font-family:'Schibsted Grotesk';font-size:16px;font-weight:600;color:#26221E;">1 scoop whey + fruit</div><div style="font-size:13.5px;color:#B0654E;font-weight:500;margin-top:2px;">Daily · post-workout on training days</div></div>
+          <div><div style="font-family:'Schibsted Grotesk';font-size:16px;font-weight:600;color:#26221E;">Max 1 scoop whey + fruit</div><div style="font-size:13.5px;color:#B0654E;font-weight:500;margin-top:2px;">Post-workout on training days · no second scoop</div></div>
         </div>
 
         <!-- Dinners -->
@@ -952,37 +952,38 @@ class Component extends DCLogic {
       'Air Bike + Cable Crunch': guide(['Air bike pe controlled twist ke saath rep nikaal.', 'Phir cable crunch me ribs ko pelvis ki taraf fold kar.', 'Dono ko clean tempo me kar, bas jaldi niptaane ke liye nahi.'], ['Motion abs se start kar.', 'Har rep pe saans sambhal ke chala.'], ['Gardan kheenchne ka nahi.', 'Sirf khatam karne ke liye faltu speed maarne ka nahi.'], ['Plank', 'Reverse crunch'], 'Air Bike + Cable Crunch'),
     };
     const cardioSteps = [
-      { name: 'Walking', detail: '20–40 min easy steps · conversational pace' },
-      { name: 'Mobility', detail: '5–10 min · hips, T-spine, shoulders, ankles' },
-      { name: 'Optional easy cardio', detail: '20–30 min Zone-2 only if energy is good' },
+      { name: 'Easy walk', detail: '10–25 min only · stop before the legs feel heavier' },
+      { name: 'Gentle mobility', detail: '5–8 min · hips, ankles, T-spine; no deep loaded stretching' },
+      { name: 'Leg recovery', detail: 'Elevate legs, hydrate, and keep steps easy through the day' },
+      { name: 'Optional cardio gate', detail: 'Only if soreness is low: 10–20 min easy bike/swim. Skip running and intervals.' },
     ];
     // index 0..6 = Sun..Sat
     const map = [
       { kind: 'Rest',   title: 'Full rest',     message: 'Full rest today: 7–9 hours sleep, easy steps, and solid food. Nothing heavy — just let the week\u2019s work land.' },
       { kind: 'Upper',  title: 'Upper A',       session: 'Upper A' },
       { kind: 'Lower',  title: 'Lower A',       session: 'Lower A' },
-      { kind: 'Cardio', title: 'Rest / Light Activity', message: 'Recovery day: walk, do mobility, and add optional easy cardio only if it feels low fatigue.' },
+      { kind: 'Cardio', title: 'Recovery / Mobility', message: 'Leg-safe recovery day: easy walk, gentle mobility, hydration, and no intervals. If legs still feel sore, skip cardio completely.' },
       { kind: 'Upper',  title: 'Upper B',       session: 'Upper B' },
       { kind: 'Lower',  title: 'Lower B',       session: 'Lower B' },
-      { kind: 'Cardio', title: 'Optional Easy Cardio', message: 'Rest or optional easy cardio. Keep it low fatigue only: relaxed steps, mobility, or short Zone-2.' },
+      { kind: 'Cardio', title: 'Recovery / Full Rest', message: 'Default to full rest after Lower B. Add only relaxed steps or a short easy bike/swim if legs feel fresh.' },
     ];
     const week = [
       { day: 'Mon', kind: 'Upper',  type: 'Upper A',       note: 'Flat press · row · pull · delts', idx: 1 },
       { day: 'Tue', kind: 'Lower',  type: 'Lower A',       note: 'Squat · RDL · legs · core', idx: 2 },
-      { day: 'Wed', kind: 'Cardio', type: 'Rest / Light Activity', note: 'Walk · mobility · optional easy', idx: 3 },
+      { day: 'Wed', kind: 'Cardio', type: 'Recovery / Mobility', note: 'Easy walk · mobility · no intervals', idx: 3 },
       { day: 'Thu', kind: 'Upper',  type: 'Upper B',       note: 'Incline · pull · two rows · rear delts', idx: 4 },
       { day: 'Fri', kind: 'Lower',  type: 'Lower B',       note: 'Deadlift · quads · curl · calves', idx: 5 },
-      { day: 'Sat', kind: 'Cardio', type: 'Optional Easy Cardio', note: 'Low fatigue activity only', idx: 6 },
+      { day: 'Sat', kind: 'Cardio', type: 'Recovery / Full Rest', note: 'Rest first · optional easy only', idx: 6 },
       { day: 'Sun', kind: 'Rest',   type: 'Full rest',     note: 'Sleep · steps · food', idx: 0 },
     ];
     const dinnersByIdx = {
-      1: 'Grilled white fish + potatoes + green beans',
-      2: 'Baked salmon + rice + roasted veg',
-      3: 'Chicken stir-fry + rice',
-      4: 'Tandoori chicken + quinoa / rice + raita',
-      5: 'Light fish curry + rice',
-      6: 'Egg & potato hash + 1 roti',
-      0: 'Lean beef + sweet potato + grilled veg',
+      1: 'Chicken curry + rice + cucumber + curd',
+      2: 'Fish curry + rice + bhindi / lauki sabzi',
+      3: 'Dal + rice + curd + 2 eggs',
+      4: 'Tandoori chicken + 2 rotis + raita',
+      5: 'Fish + rice + cabbage / beans sabzi',
+      6: 'Egg bhurji + 2 rotis + curd',
+      0: 'Small beef curry + rice / roti + veg + curd',
     };
     const dinnerList = [
       { day: 'Mon', idx: 1, text: dinnersByIdx[1] },
@@ -1008,7 +1009,7 @@ class Component extends DCLogic {
     const today = D.map[day];
     const t = this.tone(today.kind);
     const isTraining = today.kind === 'Upper' || today.kind === 'Lower';
-    const tag = today.kind === 'Cardio' ? 'Cardio' : today.kind === 'Rest' ? 'Rest' : today.kind;
+    const tag = today.kind === 'Cardio' ? 'Recovery' : today.kind === 'Rest' ? 'Rest' : today.kind;
 
     const week = D.week.map(w => {
       const wt = this.tone(w.kind);
@@ -1111,7 +1112,7 @@ class Component extends DCLogic {
       detail = {
         dayFull: dayNames[sel], title: dd.title,
         color: dtone.color, soft: dtone.soft,
-        tag: dd.kind === 'Cardio' ? 'Cardio' : dd.kind === 'Rest' ? 'Rest' : dd.kind,
+        tag: dd.kind === 'Cardio' ? 'Recovery' : dd.kind === 'Rest' ? 'Rest' : dd.kind,
         isTraining: isTr, isCardio: dd.kind === 'Cardio', isRest: dd.kind === 'Rest',
         exercises: isTr ? tintEx(D.sessions[dd.session], dtone, dd.session) : [],
         exerciseSummary: isTr ? D.sessions[dd.session].length + ' moves' : '',
@@ -1129,24 +1130,28 @@ class Component extends DCLogic {
     const dinners = D.dinnerList.map(d => ({ ...d, dayColor: d.idx === day ? '#E8593A' : '#A29A90' }));
 
     const breakfasts = [
-      { key: 'A', text: '3 eggs + 3 egg whites + 80g oats with berries' },
-      { key: 'B', text: 'Greek yogurt 250g + 60g oats + banana + honey' },
-      { key: 'C', text: 'Egg bhurji (4 eggs) + 2 multigrain rotis' },
+      { key: 'A', text: '3 eggs + 2 rotis + curd' },
+      { key: 'B', text: 'Egg bhurji + 2 rotis + cucumber' },
+      { key: 'C', text: 'Curd / Greek yogurt + oats + banana' },
     ];
     const lunches = [
-      { key: 'A', text: '200g grilled chicken + 200g rice + salad / olive oil' },
-      { key: 'B', text: '200g chicken + 3 rotis + veg sabzi (no spinach)' },
-      { key: 'C', text: '200g fish / tuna + 200g rice + cucumber-tomato salad' },
+      { key: 'A', text: 'Chicken curry + rice / 2 rotis + cucumber + curd' },
+      { key: 'B', text: 'Fish curry + rice + lauki / bhindi / cabbage sabzi' },
+      { key: 'C', text: 'Dal + rice + curd + eggs or chicken if protein is low' },
     ];
     const rules = [
-      'Water 3+ litres/day (more on training days); add ½ lemon — urine should stay pale.',
-      'Keep salt moderate; keep dairy & yogurt IN — calcium actually lowers stone risk.',
-      'Limit high-oxalate foods: spinach, almonds/nuts, beetroot, excess black tea. No vitamin-C megadoses.',
-      'Beef once a week max. Protein kept ~150g for kidney safety — don\u2019t add a 2nd scoop.',
+      'Water 3+ litres/day, more on training days; add lemon — urine should stay pale.',
+      'Keep curd/raita/yogurt IN with meals. Food calcium helps bind oxalate.',
+      'Prefer Indian basics: rice, roti, dal, curd, eggs, chicken, fish, and simple sabzi.',
+      'Best veg rotation: lauki, tori, bhindi, cabbage, cauliflower, capsicum, cucumber, beans, mushrooms.',
+      'Limit high-oxalate foods: spinach/palak, chard, beetroot, almonds/cashews/peanuts, lots of seeds, strong black tea.',
+      'Keep salt low: easy on achar, papad, namkeen, packaged masala, and restaurant-style gravy.',
+      'Beef once a week max, small portion. Protein stays ~150g/day — no second whey scoop.',
       'Track progress with a weekly tape measure at the navel, not the scale. Run 10 weeks, then reassess.',
     ];
     const recovery = [
       '7–9 hours of sleep — the single biggest driver of both fat loss and recovery.',
+      'If legs are still sore/heavy 48 hours after lower day, skip cardio and keep recovery to easy walking + gentle mobility.',
       'If a joint aches, swap to a gentler variation (e.g. DB press instead of barbell) — never train through joint pain.',
     ];
 
