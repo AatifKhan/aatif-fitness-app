@@ -24,10 +24,14 @@ repo and precached by `sw.js` on first visit, so the app works with no network
 contents — so pushing any change ships a new worker version with no manual
 steps. (Run the script yourself only if you want to test locally.)
 
-Images are WebP, resized close to their display size. Keep new images in that
-format (`cwebp -q 80`, `gif2webp` for animations).
+Images can be committed in any format (PNG/JPG/GIF): on deploy,
+`scripts/convert_images.py` converts them to WebP sized near their display
+size, rewrites the references in `index.html`, and drops the originals from
+the published site. Reference new images by their committed path — the
+rewrite is automatic.
 
 ## GitHub Pages
 
 Deployed by `.github/workflows/deploy.yml` on every push to `main`: it
-regenerates `sw.js`, then publishes the repo as the Pages artifact.
+converts images to WebP, regenerates `sw.js`, then publishes the result as
+the Pages artifact.
