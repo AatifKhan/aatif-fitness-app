@@ -18,13 +18,16 @@ Everything the app needs — runtime, fonts, and all images — is served from t
 repo and precached by `sw.js` on first visit, so the app works with no network
 (e.g. in the gym) once it has loaded once.
 
-**When deploying changes:** bump the `CACHE` version string at the top of
-`sw.js` (e.g. `aatif-fitness-v1` → `-v2`), and add any new asset paths to its
-`PRECACHE` list. Without the bump, previously cached files keep being served.
+`sw.js` is regenerated automatically on every deploy by
+`scripts/generate_sw.py`: the precache list is scanned from `index.html`,
+`support.js`, and the fonts CSS, and the cache version is a hash of the file
+contents — so pushing any change ships a new worker version with no manual
+steps. (Run the script yourself only if you want to test locally.)
 
 Images are WebP, resized close to their display size. Keep new images in that
 format (`cwebp -q 80`, `gif2webp` for animations).
 
 ## GitHub Pages
 
-This project is designed to be served as a static site from GitHub Pages.
+Deployed by `.github/workflows/deploy.yml` on every push to `main`: it
+regenerates `sw.js`, then publishes the repo as the Pages artifact.
