@@ -1,0 +1,126 @@
+// Aatif Fitness service worker — precaches the full app for offline use.
+const CACHE = 'aatif-fitness-v1';
+const PRECACHE = [
+  "./",
+  "./index.html",
+  "./support.js",
+  "./manifest.webmanifest",
+  "./icon.webp",
+  "./vendor/react.production.min.js",
+  "./vendor/react-dom.production.min.js",
+  "./assets/exercises/air-bike-cable-crunch-guide.webp",
+  "./assets/exercises/back-squat-guide.webp",
+  "./assets/exercises/barbell-row-clean.webp",
+  "./assets/exercises/bulgarian-split-squat-guide.webp",
+  "./assets/exercises/cable-crunch-captains-chair-guide.webp",
+  "./assets/exercises/conventional-deadlift-guide.webp",
+  "./assets/exercises/dips-guide.webp",
+  "./assets/exercises/ez-barbell-curl-clean.webp",
+  "./assets/exercises/flat-db-bench-guide.webp",
+  "./assets/exercises/front-squat-guide.webp",
+  "./assets/exercises/hammer-curl-guide.webp",
+  "./assets/exercises/incline-barbell-bench-clean.webp",
+  "./assets/exercises/incline-db-press-guide.webp",
+  "./assets/exercises/lateral-raises-guide.webp",
+  "./assets/exercises/leg-curl-guide.webp",
+  "./assets/exercises/leg-extension-guide.webp",
+  "./assets/exercises/one-arm-db-row-guide.webp",
+  "./assets/exercises/pullups-lat-pulldown-clean.webp",
+  "./assets/exercises/rear-delt-fly-face-pull-guide.webp",
+  "./assets/exercises/romanian-deadlift-guide.webp",
+  "./assets/exercises/samples/clean-barbell-row/frame-1-full.webp",
+  "./assets/exercises/samples/clean-barbell-row/source-3-panel-clean.webp",
+  "./assets/exercises/samples/clean-ez-barbell-curl/frame-1-full.webp",
+  "./assets/exercises/samples/clean-ez-barbell-curl/source-3-panel-clean.webp",
+  "./assets/exercises/samples/clean-incline-bench/frame-1-full.webp",
+  "./assets/exercises/samples/clean-incline-bench/source-3-panel-clean.webp",
+  "./assets/exercises/samples/clean-pullups-lat-pulldown/frame-1-full.webp",
+  "./assets/exercises/samples/clean-pullups-lat-pulldown/source-3-panel-clean.webp",
+  "./assets/exercises/samples/clean-seated-db-shoulder-press/frame-1-full.webp",
+  "./assets/exercises/samples/clean-seated-db-shoulder-press/source-3-panel-clean.webp",
+  "./assets/exercises/samples/clean-triceps-pushdown/frame-1-full.webp",
+  "./assets/exercises/samples/clean-triceps-pushdown/source-3-panel-clean.webp",
+  "./assets/exercises/seated-calf-raise-guide.webp",
+  "./assets/exercises/seated-db-shoulder-press-clean.webp",
+  "./assets/exercises/standing-calf-raise-guide.webp",
+  "./assets/exercises/thumbs/air-bike-cable-crunch-thumb.webp",
+  "./assets/exercises/thumbs/back-squat-thumb.webp",
+  "./assets/exercises/thumbs/bulgarian-split-squat-thumb.webp",
+  "./assets/exercises/thumbs/cable-crunch-captains-chair-thumb.webp",
+  "./assets/exercises/thumbs/conventional-deadlift-thumb.webp",
+  "./assets/exercises/thumbs/dips-thumb.webp",
+  "./assets/exercises/thumbs/flat-db-bench-thumb.webp",
+  "./assets/exercises/thumbs/front-squat-thumb.webp",
+  "./assets/exercises/thumbs/hammer-curl-thumb.webp",
+  "./assets/exercises/thumbs/incline-db-press-thumb.webp",
+  "./assets/exercises/thumbs/lateral-raises-thumb.webp",
+  "./assets/exercises/thumbs/leg-curl-thumb.webp",
+  "./assets/exercises/thumbs/leg-extension-thumb.webp",
+  "./assets/exercises/thumbs/one-arm-db-row-thumb.webp",
+  "./assets/exercises/thumbs/rear-delt-fly-face-pull-thumb.webp",
+  "./assets/exercises/thumbs/romanian-deadlift-thumb.webp",
+  "./assets/exercises/thumbs/seated-calf-raise-thumb.webp",
+  "./assets/exercises/thumbs/standing-calf-raise-thumb.webp",
+  "./assets/exercises/thumbs/walking-lunges-thumb.webp",
+  "./assets/exercises/triceps-pushdown-clean.webp",
+  "./assets/exercises/walking-lunges-guide.webp",
+  "./assets/fonts/fonts.css",
+  "./assets/workouts/lower-a-personal.webp",
+  "./assets/workouts/lower-b-personal-split-avatar.webp",
+  "./assets/workouts/upper-a-personal.webp",
+  "./assets/workouts/upper-b-personal.webp",
+  "./assets/fonts/Jqz55SSPQuCQF3t8uOwiUL-taUTtap9GayojdSFO.woff2",
+  "./assets/fonts/Jqz55SSPQuCQF3t8uOwiUL-taUTtap9IayojdSFOd1I.woff2",
+  "./assets/fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpQ59CxCis4UvI.woff2",
+  "./assets/fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpS59CxCis4UvI.woff2",
+  "./assets/fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpT59CxCis4UvI.woff2",
+  "./assets/fonts/ieVn2YZDLWuGJpnzaiwFXS9tYtpd59CxCis4.woff2"
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(PRECACHE)).then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
+
+  if (req.mode === 'navigate') {
+    // Network-first for the page itself so deploys show up, cache as fallback.
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE).then((cache) => cache.put('./index.html', copy));
+          return res;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Cache-first for everything else; fill the cache on miss.
+  event.respondWith(
+    caches.match(req, { ignoreSearch: true }).then(
+      (hit) =>
+        hit ||
+        fetch(req).then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((cache) => cache.put(req, copy));
+          }
+          return res;
+        })
+    )
+  );
+});
