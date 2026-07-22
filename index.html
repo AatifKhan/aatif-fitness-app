@@ -589,10 +589,11 @@ class Component extends DCLogic {
     const sessions = {
       'Upper A': [
         { name: 'Flat DB Bench', scheme: '4 × 6–8',  rest: '2–3 min', note: 'Horizontal press', primaryMuscles: ['Chest'], secondaryMuscles: ['Front delts', 'Triceps'], cue: 'Let the dumbbells travel low and wide, then press up while keeping shoulders packed.' },
+        { name: 'Cable Fly / Pec Deck', scheme: '3 × 12–15', rest: '75 sec', note: 'Chest stretch', primaryMuscles: ['Chest'], secondaryMuscles: ['Front delts'], cue: 'Keep a soft elbow bend, let the chest stretch wide at the bottom, then squeeze the pecs together without bending the arms.' },
         { name: 'Barbell Row', scheme: '3 × 8–10', rest: '2 min', note: '', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Brace hard, keep the torso angle steady, and pull the bar toward the lower ribs.' },
         { name: 'Pull-ups / Lat Pulldown', scheme: '3 × 8–10', rest: '90 sec', note: '', primaryMuscles: ['Lats'], secondaryMuscles: ['Mid-back', 'Biceps'], cue: 'Lead with the elbows, pull the chest toward the bar, and avoid shrugging at the top.' },
         { name: 'Lateral Raises', scheme: '3 × 12–15', rest: '60 sec', note: 'Lateral delts', primaryMuscles: ['Side delts'], secondaryMuscles: ['Traps'], cue: 'Lift out and slightly forward, stop around shoulder height, and keep the neck relaxed.' },
-        { name: 'Triceps Pushdown', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with curls', primaryMuscles: ['Triceps'], secondaryMuscles: ['Forearms'], cue: 'Pin the elbows by your sides and lock out by squeezing the triceps, not by leaning over the handle.' },
+        { name: 'Overhead Cable Extension', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with curls', primaryMuscles: ['Triceps'], secondaryMuscles: ['Forearms'], cue: 'Keep the upper arms locked by your ears and let the elbows stretch overhead before extending fully.' },
         { name: 'EZ / Barbell Curl', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with pushdowns', primaryMuscles: ['Biceps'], secondaryMuscles: ['Forearms'], cue: 'Keep shoulders quiet, curl through the elbow, and lower under control.' },
       ],
       'Lower A': [
@@ -609,6 +610,7 @@ class Component extends DCLogic {
         { name: 'One-Arm DB Row / Cable Row', scheme: '3 × 10–12', rest: '90 sec', note: 'First row', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Reach long at the bottom, then pull the elbow toward the hip without twisting open.' },
         { name: 'Barbell Row', scheme: '3 × 8–10', rest: '2 min', note: 'Second row', primaryMuscles: ['Lats', 'Mid-back'], secondaryMuscles: ['Rear delts', 'Biceps'], cue: 'Brace hard, keep the torso angle steady, and pull the bar toward the lower ribs.' },
         { name: 'Rear Delt Fly / Face Pull', scheme: '3 × 12–15', rest: '60 sec', note: 'Rear delts', primaryMuscles: ['Rear delts'], secondaryMuscles: ['Mid-back', 'Rotator cuff'], cue: 'Pull wide with control, keep traps quiet, and finish with the shoulders open instead of shrugged.' },
+        { name: 'Lateral Raises', scheme: '3 × 12–15', rest: '60 sec', note: 'Lateral delts', primaryMuscles: ['Side delts'], secondaryMuscles: ['Traps'], cue: 'Lift out and slightly forward, stop around shoulder height, and keep the neck relaxed.' },
         { name: 'Dips / Close-Grip Bench', scheme: '3 × 8–10', rest: '90 sec', note: 'Triceps', primaryMuscles: ['Triceps'], secondaryMuscles: ['Chest', 'Front delts'], cue: 'Keep elbows controlled and use a pain-free depth; choose close-grip bench if shoulders complain.' },
         { name: 'Hammer Curl', scheme: '3 × 10–12', rest: '60 sec', note: 'Superset with dips', primaryMuscles: ['Biceps'], secondaryMuscles: ['Brachialis', 'Forearms'], cue: 'Keep palms facing in, elbows still, and squeeze without swinging the torso.' },
       ],
@@ -829,6 +831,26 @@ class Component extends DCLogic {
         author: 'Custom generated',
         license: 'Local guide',
       },
+      'Cable Fly / Pec Deck': {
+        type: 'image',
+        src: './assets/exercises/cable-fly-guide.webp',
+        thumbnail: './assets/exercises/thumbs/cable-fly-thumb.webp',
+        alt: 'A three-position standing cable chest fly guide with the pectoral muscles highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/cable-fly-guide.webp',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
+      'Overhead Cable Extension': {
+        type: 'image',
+        src: './assets/exercises/overhead-extension-guide.webp',
+        thumbnail: './assets/exercises/thumbs/overhead-extension-thumb.webp',
+        alt: 'A three-position standing overhead cable triceps extension guide with the triceps highlighted on a white background',
+        position: 'center center',
+        source: './assets/exercises/overhead-extension-guide.webp',
+        author: 'Custom generated',
+        license: 'Local guide',
+      },
       'Rear Delt Fly / Face Pull': {
         type: 'image',
         src: './assets/exercises/rear-delt-fly-face-pull-guide.webp',
@@ -944,6 +966,8 @@ class Component extends DCLogic {
       'One-Arm DB Row / Cable Row': guide(['Body ko stable rakh aur back tight kar.', 'Neeche stretch le, haath ko lamba jaane de.', 'Elbow ko hip ki taraf kheench aur back squeeze kar.'], ['Stretch full le, phir pull solid maar.', 'Torso ko twist karne ka nahi.'], ['Shoulder ko kaan tak chadhane ka nahi.', 'Elbow ko seedha armpit me kheenchne ka nahi.'], ['Chest-supported DB row', 'Seated cable row'], 'One-Arm DB Row / Cable Row'),
       'Incline DB Press': guide(['Moderate incline pe set ho aur DB upper chest ke paas rakh.', 'DB ko upar aur thoda sa andar press kar.', 'Neeche utna hi la jitna chest aur shoulder clean feel kare.'], ['Kalai neutral rakh.', 'Depth control me rakh.'], ['Bench ko bahut steep banane ka nahi.', 'Shoulder ko over-stretch dene ka nahi.'], ['Incline machine press', 'Low-incline push-up'], 'Incline DB Press'),
       'Lateral Raises': guide(['DB side me pakad aur elbow ko halka soft rakh.', 'DB ko side aur thoda aage shoulder height tak utha.', 'Neeche aaram se la, delts pe tension bana ke rakh.'], ['Elbow lead karega.', 'Neck ko chill rakh.'], ['Trap ko shrug karne ka nahi.', 'Hip se jhatka maarne ka nahi.'], ['Cable lateral raise', 'Machine lateral raise'], 'Lateral Raises'),
+      'Cable Fly / Pec Deck': guide(['Handle ko chest height pe set kar aur halka aage step le.', 'Elbow me halka bend rakh, phir haath wide open karke chest ka stretch feel kar.', 'Pec ko squeeze karke haath saamne le aa, elbow lock mat kar.'], ['Movement chest se le, haath se nahi.', 'Bottom pe stretch aur top pe squeeze — dono feel kar.'], ['Elbow ko press ki tarah bend karke dhakka dene ka nahi.', 'Weight heavy karke range chhota karne ka nahi.'], ['Pec deck machine', 'Dumbbell fly'], 'Cable Fly / Pec Deck'),
+      'Overhead Cable Extension': guide(['Rope ko upar set kar aur usko sar ke peeche le ja.', 'Upper arm ko kaan ke paas lock kar, elbow ko peeche stretch hone de.', 'Triceps se zor laga ke haath poora upar seedha kar, phir control me stretch me wapas ja.'], ['Upper arm ko hilne mat de, sirf elbow khulega.', 'Overhead stretch pe long head ko feel kar.'], ['Elbow bahar flare karke shoulder pe load daalne ka nahi.', 'Full stretch ke bina half rep karne ka nahi.'], ['Triceps pushdown', 'DB overhead extension'], 'Overhead Cable Extension'),
       'Rear Delt Fly / Face Pull': guide(['Cable ya dumbbell ko light rakho aur chest tall set karo.', 'Elbow ko wide line me kheench, haath ko face/shoulder height tak lao.', 'End pe rear delts squeeze karo, phir control me wapas jao.'], ['Trap ko chill rakh.', 'Movement rear shoulder se start kar.'], ['Weight heavy karke shrug karne ka nahi.', 'Lower back se jhatka dene ka nahi.'], ['Reverse pec deck', 'Band face pull'], 'Rear Delt Fly / Face Pull'),
       'Dips / Close-Grip Bench': guide(['Jo version shoulder ko zyada set lage wahi pakad.', 'Neeche control me ja, elbow natural line me rak.', 'Upar aate waqt triceps se zor laga.'], ['Pain-free depth hi rakh.', 'Bottom ka control tight rakh.'], ['Bahut neeche doobne ka nahi.', 'Shoulder ko aage roll karne ka nahi.'], ['Triceps pushdown', 'Machine dip'], 'Dips / Close-Grip Bench'),
       'Hammer Curl': guide(['Dumbbell ko palms-in grip me pakad.', 'Curl maar, par upper arm ko hilne mat de.', 'Neeche la jab tak elbow seedha na ho, par control chhod mat.'], ['Thumbs up hi rakh.', 'Elbow ko shaant rakh.'], ['Weight ko jhula bana ke uthane ka nahi.', 'Neeche ka aadha range khaane ka nahi.'], ['Rope cable curl', 'Cross-body hammer curl'], 'Hammer Curl'),
@@ -1095,7 +1119,7 @@ class Component extends DCLogic {
         'Upper B': [
           { label: 'Main', value: 'Incline' },
           { label: 'Support', value: '2 rows' },
-          { label: 'Finish', value: 'Rear delts' },
+          { label: 'Finish', value: 'Delts/arms' },
         ],
         'Lower B': [
           { label: 'Main', value: 'Hinge' },
