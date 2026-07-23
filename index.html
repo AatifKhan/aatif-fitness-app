@@ -210,18 +210,24 @@ html,body{margin:0;padding:0}
         </div>
 
         <!-- TONIGHT'S DINNER -->
-        <div style="background:#fff;border:1px solid #F0ECE6;border-radius:24px;padding:22px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:16px;display:flex;align-items:center;gap:16px;">
-          <div style="flex:1;min-width:0;">
-            <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#A8A096;font-weight:700;">Tonight's Dinner</div>
-            <div style="font-family:'Schibsted Grotesk';font-size:21px;font-weight:500;letter-spacing:-.005em;margin-top:10px;line-height:1.3;">{{ dinner }}</div>
+        <div style="background:#fff;border:1px solid #F0ECE6;border-radius:24px;padding:22px;box-shadow:0 1px 2px rgba(31,28,26,.04),0 10px 30px rgba(31,28,26,.05);margin-bottom:16px;">
+          <div style="font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#A8A096;font-weight:700;">Tonight's Dinner</div>
+          <div style="font-family:'Schibsted Grotesk';font-size:24px;font-weight:600;letter-spacing:-.01em;margin-top:8px;line-height:1.2;">{{ dinnerTitle }}</div>
+          <div style="margin-top:14px;border-radius:18px;overflow:hidden;border:1px solid #F0ECE6;background:#FAF8F5;">
+            <img src="{{ dinnerImage }}" alt="{{ dinnerAlt }}" loading="lazy" style="display:block;width:100%;height:158px;object-fit:cover;">
           </div>
-          <svg width="62" height="62" viewBox="0 0 48 48" fill="none" style="flex:none;">
-            <ellipse cx="24" cy="27" rx="20" ry="14" fill="#FFFFFF" stroke="#2A2622" stroke-width="2.4"/>
-            <ellipse cx="24" cy="27" rx="13.5" ry="9" fill="#F1ECE4" stroke="#2A2622" stroke-width="1.6"/>
-            <path d="M16 27 Q20 21 28 23 Q33 24 31 28 Q29 32 22 31 Q17 30 16 27 Z" fill="#F08A6B" stroke="#2A2622" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M20 26 Q24 25 28 26 M20 28.6 Q24 28 28 28.9" stroke="#C9432A" stroke-width="1.4" stroke-linecap="round"/>
-            <circle cx="33" cy="30.5" r="2.6" fill="#FFD23F" stroke="#2A2622" stroke-width="1.6"/>
-          </svg>
+          <div style="margin-top:8px;">
+            <sc-for list="{{ dinnerComponents }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid #F2EEE8;">
+                <span style="font-size:15px;color:#3A352F;font-weight:600;">{{ c.name }}</span>
+                <span style="flex:none;font-size:12.5px;color:#A29A90;font-weight:600;white-space:nowrap;">{{ c.portion }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:1px solid #F2EEE8;">
+            <span style="font-size:12.5px;color:#8F8A82;font-weight:700;">Protein</span>
+            <span style="font-family:'Schibsted Grotesk';font-size:16px;font-weight:700;color:#E8593A;">{{ dinnerProtein }}</span>
+          </div>
         </div>
 
         <!-- DAILY ANCHORS -->
@@ -1004,22 +1010,23 @@ class Component extends DCLogic {
       { day: 'Sun', kind: 'Rest',   type: 'Full rest',     note: 'Sleep · steps · food', idx: 0 },
     ];
     const dinnersByIdx = {
-      1: 'Chicken curry + rice + cucumber + curd',
-      2: 'Fish curry + rice + bhindi / lauki sabzi',
-      3: 'Dal + rice + curd + 2 eggs',
-      4: 'Tandoori chicken + 2 rotis + raita',
-      5: 'Fish + rice + cabbage / beans sabzi',
-      6: 'Egg bhurji + 2 rotis + curd',
-      0: 'Small beef curry + rice / roti + veg + curd',
+      1: { title: 'Chicken curry', image: './assets/food/dinner-chicken-curry.webp', protein: '45 g', components: [{ name: 'Chicken curry', portion: '150 g' }, { name: 'Rice', portion: '1 cup' }, { name: 'Cucumber', portion: 'sliced' }, { name: 'Curd', portion: '1 bowl' }] },
+      2: { title: 'Fish curry', image: './assets/food/dinner-fish-curry.webp', protein: '38 g', components: [{ name: 'Fish curry', portion: '150 g' }, { name: 'Rice', portion: '1 cup' }, { name: 'Bhindi / lauki sabzi', portion: '1 bowl' }] },
+      3: { title: 'Dal, rice & eggs', image: './assets/food/dinner-dal-eggs.webp', protein: '33 g', components: [{ name: 'Dal', portion: '1 bowl' }, { name: 'Rice', portion: '1 cup' }, { name: 'Curd', portion: '1 bowl' }, { name: 'Eggs', portion: '2' }] },
+      4: { title: 'Tandoori chicken', image: './assets/food/dinner-tandoori-chicken.webp', protein: '50 g', components: [{ name: 'Tandoori chicken', portion: '200 g' }, { name: 'Roti', portion: '2' }, { name: 'Raita', portion: '1 bowl' }] },
+      5: { title: 'Fish & rice', image: './assets/food/dinner-fish-rice.webp', protein: '37 g', components: [{ name: 'Fish', portion: '150 g' }, { name: 'Rice', portion: '1 cup' }, { name: 'Cabbage / beans sabzi', portion: '1 bowl' }] },
+      6: { title: 'Egg bhurji', image: './assets/food/dinner-egg-bhurji.webp', protein: '31 g', components: [{ name: 'Egg bhurji', portion: '3 eggs' }, { name: 'Roti', portion: '2' }, { name: 'Curd', portion: '1 bowl' }] },
+      0: { title: 'Beef curry', image: './assets/food/dinner-beef-curry.webp', protein: '35 g', components: [{ name: 'Beef curry', portion: '120 g' }, { name: 'Rice / roti', portion: '1' }, { name: 'Veg sabzi', portion: '1 bowl' }, { name: 'Curd', portion: '1 bowl' }] },
     };
+    const dinnerSummary = idx => dinnersByIdx[idx].components.map(c => c.name).join(' + ');
     const dinnerList = [
-      { day: 'Mon', idx: 1, text: dinnersByIdx[1] },
-      { day: 'Tue', idx: 2, text: dinnersByIdx[2] },
-      { day: 'Wed', idx: 3, text: dinnersByIdx[3] },
-      { day: 'Thu', idx: 4, text: dinnersByIdx[4] },
-      { day: 'Fri', idx: 5, text: dinnersByIdx[5] },
-      { day: 'Sat', idx: 6, text: dinnersByIdx[6] },
-      { day: 'Sun', idx: 0, text: dinnersByIdx[0] },
+      { day: 'Mon', idx: 1, text: dinnerSummary(1) },
+      { day: 'Tue', idx: 2, text: dinnerSummary(2) },
+      { day: 'Wed', idx: 3, text: dinnerSummary(3) },
+      { day: 'Thu', idx: 4, text: dinnerSummary(4) },
+      { day: 'Fri', idx: 5, text: dinnerSummary(5) },
+      { day: 'Sat', idx: 6, text: dinnerSummary(6) },
+      { day: 'Sun', idx: 0, text: dinnerSummary(0) },
     ];
     return { warmupItems, progressionItems, sessions, workoutImages, exerciseGuides, cardioSteps, map, week, dinnersByIdx, dinnerList };
   }
@@ -1155,6 +1162,7 @@ class Component extends DCLogic {
     }
 
     const dinners = D.dinnerList.map(d => ({ ...d, dayColor: d.idx === day ? '#E8593A' : '#A29A90' }));
+    const todayDinner = D.dinnersByIdx[day];
 
     const breakfasts = [
       { key: 'A', text: '3 eggs + 2 rotis + curd' },
@@ -1214,7 +1222,11 @@ class Component extends DCLogic {
       toggleWarm: () => this.setState(s => ({ warmOpen: !s.warmOpen })),
       toggleProg: () => this.setState(s => ({ progOpen: !s.progOpen })),
 
-      dinner: D.dinnersByIdx[day],
+      dinnerTitle: todayDinner.title,
+      dinnerImage: todayDinner.image,
+      dinnerAlt: 'A hand-painted illustration of tonight’s dinner: ' + todayDinner.title,
+      dinnerComponents: todayDinner.components,
+      dinnerProtein: todayDinner.protein,
 
       week,
       weekListOpen: !detailOpen,
